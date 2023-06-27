@@ -3,6 +3,7 @@ import tkinter
 #pip install pillow
 from PIL import ImageTk, Image 
 from tkinter import PhotoImage, messagebox
+import sqlite3
 
 
 class MainPage(tkinter.Tk):
@@ -14,27 +15,9 @@ class MainPage(tkinter.Tk):
         height_screen= self.winfo_screenheight()
         self.geometry("%dx%d" % (width_screen, height_screen))
         self.iconphoto(False, PhotoImage(file = 'Images_for_Gui/images.png'))
-        # Define image
-        bg = ImageTk.PhotoImage(file="Images_for_Gui\wit-background.png")
-        #Create canvas
-        my_canvas = Canvas(self, width = width_screen, height = height_screen)
-        my_canvas.pack(fill="both", expand=True)
-        #set image in canvas
-        my_canvas.create_image(0,0,image=bg, anchor="nw")
-        tkinter.Label(self, image= bg).place(x=0, y=0,relwidth=1, relheight=1)
-        self.bind('<Return>', self.resizer)
         self.login_frame = LoginFrame(self)
         self.ShowLoginFrame()
-    def resizer(self, e):
-        global bg1, resized_bg, new_bg
-        # Open Image
-        bg1= Image.open("Images_for_Gui\wit-background.png")
-        #resize Image
-        resized_bg = bg1.resize((e.width, e.height), Image.ANTIALIAS)
-        #define the image
-        new_bg = ImageTk.PhotoImage(resized_bg)
-        #add it back to canvas
-        self.my_canvas.create_image(0,0, image=new_bg, anchor='nw')
+
 
     def ShowLoginFrame(self):
         #setting page geometry to the size of the user's screen
@@ -64,13 +47,21 @@ class LoginFrame (tkinter.Frame):
     def login(self):
         username = self.username_entry.get() 
         password = self.password_entry.get()
-        
-        # Perform login validation here (e.g., check against a database)
-        # For simplicity, we'll use a dummy check
-        if username == "admin" and password == "password":
-            self.master.show_home_frame()
-        else:
-            messagebox.showerror("Login Failed", "Invalid username or password.")
+
+        DbConnect = sqlite3.connect("Database/tables.db")
+        db= DbConnect.cursor() 
+        db_userDescription= DbConnect.cursor()
+        db.execute("SELECT 1 FROM AUTHENTIFY  WHERE USERNAME = ? and PASSWORD = ? ", (username, password))
+        #db_userDescription.execute("SELECT * FROM AUTHENTIFY  WHERE USERNAME = ? and PASSWORD = ? ", (username, password))
+        for row in db.execute("SELECT * FROM AUTHENTIFY  WHERE USERNAME = ? and PASSWORD = ? ", (username, password)):
+            print(row[3])
+            if row[3] == 'STUDENT':
+                self.master.show_home_frame()            
+            else:
+                messagebox.showerror("Login Failed", "Invalid username or password.")
+       
+        result = db.fetchone()
+        description = db_userDescription.fetchall()
 
 if __name__ == "__main__":
     app = MainPage()
