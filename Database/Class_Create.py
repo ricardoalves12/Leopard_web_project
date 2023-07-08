@@ -15,10 +15,13 @@ class Class_Creator:
   
    def Create(self):
      self.cursor.execute(""" CREATE TABLE AUTHENTIFY(
-        PASSWORD TEXT  NOT NULL,
-         USERNAME TEXT NOT NULL,
-         USER_ID INTERGER NOT NULL,
-         USER_DESCRIPTION TEXT NOT NULL
+        USER_ID INTERGER NOT NULL,
+        STATUS TEXT NOT NULL,
+        FIRST NAME TEXT NOT NULL,
+        LAST NAME TEXT  NOT NULL,
+        USERNAME TEXT NOT NULL,
+        PASSWORD TEXT NOT NULL
+         
          PRIMARY KEY 
           );"""
 
@@ -63,14 +66,32 @@ class Class_Creator:
      self.cursor.execute(Val)
      self.connect.commit()
     
-   def Fetch(self):
-     self.cursor.execute()
+   def Alter_name(self,table,old_name,new_name):
+     Valu=f"ALTER TABLE {table} RENAME COLUMN {old_name} TO  {new_name};"
+     self.cursor.execute(Valu)
+   def Alter_delete(self,Variable):
+     Value=f"DROP TABLE {Variable};"
+     self.cursor.execute(Value)
+     
 
 Database= Class_Creator("Leopard_web_project/Database/tables.db")
 Database.Connect()
 
-Database.Insert_STUDENT(123,"M","G",2023,"BSCE","GM")
+# Database.Alter_delete("AUTHENTIFY","PASSWORD")
+# Database.Alter_delete("AUTHENTIFY","USERNAME")
 
+# Database.Alter_delete("AUTHENTIFY","Description")
 
+# Database.Alter("ID","AUTHENTIFY")
+# Database.Alter("USER NAME","AUTHENTIFY")
+# Database.Alter("PASSWORD","AUTHENTIFY")
+# Database.Alter("STATUS","AUTHENTIFY")
+
+# Database.Alter_name("AUTHENTIFY","STATUS","NONE")
+#Database.Alter_delete("AUTHENTIFY","NONE")
+#Database.Alter_name("AUTHENTIFY","Description","STATUS")
+#Database.Alter_delete("AUTHENTIFY","ID")
+#Database.Alter_delete("AUTHENTIFY")
+Database.Create()
 Database.Disconnect()
 
