@@ -17,6 +17,7 @@ else:
     print(f"{Teacher} not teaching {Course}")
 
 
-  
+cursor.execute("DELETE FROM STUDENT WHERE NAME='Tomasso'")
+database.commit()
 
 
