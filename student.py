@@ -2,17 +2,9 @@ from user import User
 import sqlite3
 import random 
 class Student(User):
-       def __init__(self,first_name,last_name,id,major,grad_year,status):
-          super().__init__(first_name,last_name,id,status),
+       def __init__(self):
+          super().__init__()
           
-          
-          self.Major=major
-          self.graduate=grad_year
-          self.Email= self.first_name + self.last_name[0] + " @wit.edu"
-          self.schedule={}
-          self.cursor=None
-          self.connect=None
-     
        def Connect(self):
           self.connect=sqlite3.connect("Leopard_web_project/Database/tables.db")
           self.cursor=self.connect.cursor()
@@ -31,7 +23,8 @@ class Student(User):
             
 
        def search_Course(self,crn):
-          
+          self.connect=sqlite3.connect("Database/tables.db")
+          self.cursor=self.connect.cursor()
           Fetch="""SELECT * FROM COURSE WHERE CRN =? """
           course_crn=crn
           self.cursor.execute(Fetch,(course_crn,))
@@ -92,41 +85,7 @@ class Student(User):
          for row in self.schedule:
             print(row)
 
-print(" Hello new user ")
-Name=input("Can you please enter your first name: ")
-Name2=input("Can you please enter your last name: ")
-id = random.randint(1000,3000)
-status=input("Please enter your status at the school :")
-New_User=User(Name,Name2,id,"STUDENT")
-New_User.Connect()
-#New_User.implement()
 
-if New_User.status=="STUDENT":
-     Major=input(" Please enter your major: ")
-     Gradyear=input(" when do you expect to gradute: ")
-     Grad=int(Gradyear)
-     New_student=Student(Name,Name2,id,Major,Grad,status)
-     New_student.Connect()
-     command=input(" Enter a command: ")
-
-     #New_student.implement()
-     if command=="1":
-      New_student.search_Course(234)
-     elif command=="2":
-      print(New_student.Add_Course(234))
-      New_student.Append(234)
-      New_student.Append(205)
-      New_student.Add_Course(120)
-      New_student.update(234,New_student.first_name)
-      for key,value in New_student.schedule.items():
-         print(f"{key} : {value}")
-      New_student.Remove(205)
-      for key,value in New_student.schedule.items():
-         print(f"{key} : {value}")
-     New_student.Disconnect()
-
-New_student.Disconnect()
-         
 
       
 
