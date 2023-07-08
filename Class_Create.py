@@ -56,13 +56,13 @@ class Class_Creator:
      self.cursor.execute(Val)
      self.connect.commit()
 
-# Database=Class_Creator("Leopard_web_project/Database/tables.db")
-# Database.Connect()
-# Database.Create()
+Database=Class_Creator("Leopard_web_project/Database/tables.db")
+Database.Connect()
+Database.Alter("ROASTER","COURSE")
 
 Dict={}
 Dict[45]="Dog"
 
 
-# Database.Disconnect()
+Database.Disconnect()
 
