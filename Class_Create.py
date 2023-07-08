@@ -15,10 +15,13 @@ class Class_Creator:
   
    def Create(self):
      self.cursor.execute(""" CREATE TABLE AUTHENTIFY(
-        PASSWORD TEXT  NOT NULL,
-         USERNAME TEXT NOT NULL,
+        
          USER_ID INTERGER NOT NULL,
-         USER_DESCRIPTION TEXT NOT NULL
+         STATUS TEXT NOT NULL,
+         FIRST_NAME TEXT NOT NULL,
+         LAST_NAME TEXT NOT NULL,
+         USER_NAME TEXT NOT NULL,
+         PASSWORD TEXT NULL
          PRIMARY KEY 
           );"""
 
@@ -38,39 +41,28 @@ class Class_Creator:
        self.connect.commit()
         
 
-   def Insert_USER(self,Password,USER,ID):
+   def Insert(self,Password,USER,ID):
       Value =f"""INSERT INTO  AUTHENTIFY VALUES((?),(?),(?));"""
       self.cursor.execute(Value,(Password,USER,ID))
       self.connect.commit()
     
-   def Insert_COURSE(self,crn,course_name,course_day,course_time,instructor_name):
-      Value= f"""INSERT INTO COURSE VALUES((?),(?),(?),(?),(?));"""
-      self.cursor.execute(Value,(crn,course_name,course_day,course_time,instructor_name))
-      self.connect.commit()
-    
-   def Insert_STUDENT(self,Id,Name,Surname,Gradyear,Major,Email):
-       Values=f"""INSERT INTO STUDENT VALUES((?),(?),(?),(?),(?),(?));"""
-       self.cursor.execute(Values,(Id,Name,Surname,Gradyear,Major,Email))
-       self.connect.commit()
-
-   def Insert_INSTRUCTOR(self,Id,Name,Surname,Title,Hireyear,Department,Email):
-      Values=f"""INSERT INTO INSTRUCTOR VALUES((?),(?)(?),(?),(?),(?),(?));"""
-      self.cursor.execute(Values,(Id,Name,Surname,Title,Hireyear,Department,Email))
-      self.connect.commit()
+   def delete(self):
+     Value=""" DROP TABLE AUTHENTIFY"""
+     self.cursor.execute(Value)
+     self.connect.commit()
 
    def Alter(self,col,New_variable):
      Val=f""" ALTER TABLE {New_variable} ADD COLUMN {col};"""
      self.cursor.execute(Val)
      self.connect.commit()
-    
-   def Fetch(self):
-     self.cursor.execute()
 
-Database= Class_Creator("Leopard_web_project/Database/tables.db")
-Database.Connect()
+# Database=Class_Creator("Leopard_web_project/Database/tables.db")
+# Database.Connect()
+# Database.Create()
 
-Database.Insert_STUDENT(123,"M","G",2023,"BSCE","GM")
+Dict={}
+Dict[45]="Dog"
 
 
-Database.Disconnect()
+# Database.Disconnect()
 
