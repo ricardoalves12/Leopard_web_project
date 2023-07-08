@@ -18,6 +18,7 @@ class MainPage(tkinter.Tk):
         self.iconphoto(False, PhotoImage(file = 'Images_for_Gui/images.png'))
         self.login_frame = LoginFrame(self)
         self.student_frame = StudenthomeFrame(self)
+        self.student_search_class_frame = StudentSearchClassFrame(self)
         self.ShowLoginFrame()
 
 
@@ -27,13 +28,21 @@ class MainPage(tkinter.Tk):
         height_screen= self.winfo_screenheight()
         self.login_frame.place(x=((width_screen/2) -200),y=((height_screen/2) -380))
         self.student_frame.place_forget()
+        self.student_search_class_frame.place_forget()
 
     def show_student_Frame(self):
         width_screen= self.winfo_screenwidth()
         height_screen= self.winfo_screenheight()
         self.login_frame.place_forget()
         self.student_frame.place(x=((width_screen/2) -200),y=((height_screen/2) -380))
-
+        self.student_search_class_frame.place_forget()
+    
+    def show_student_search_Class_Frame(self):
+        width_screen= self.winfo_screenwidth()
+        height_screen= self.winfo_screenheight()
+        self.login_frame.place_forget()
+        self.student_frame.place_forget()
+        self.student_search_class_frame.place(x=((width_screen/2) -200),y=((height_screen/2) -380))
 
 class LoginFrame (tkinter.Frame):
     def __init__(self, master):
@@ -85,13 +94,50 @@ class StudenthomeFrame(tkinter.Frame):
 
         self.logout_button = tkinter.Button(self, text="Logout", font=('Times',12),  bg="red", fg="white", bd=0, command=self.logout)
         self.logout_button.place(x=285, y=30)
+
+        self.logout_button = tkinter.Button(self, text="Search Course", font=('Times',12),  bg="black", fg="white", bd=0, command=self.SearchClass)
+        self.logout_button.place(x=20, y=70)
+
+        self.logout_button = tkinter.Button(self, text="Add Course", font=('Times',12),  bg="black", fg="white", bd=0, command=self.logout)
+        self.logout_button.place(x=20, y=110)
+
+        self.logout_button = tkinter.Button(self, text="Drop Course", font=('Times',12),  bg="black", fg="white", bd=0, command=self.logout)
+        self.logout_button.place(x=20, y=150)
+
+        self.logout_button = tkinter.Button(self, text="Print schedule", font=('Times',12),  bg="black", fg="white", bd=0, command=self.logout)
+        self.logout_button.place(x=20, y=190)
         
         
-    def view_profile(self):
-        self.master.show_profile_frame()
+    def SearchClass(self):
+        self.master.show_student_search_Class_Frame()
         
     def logout(self):
         self.master.ShowLoginFrame()
+
+
+class StudentSearchClassFrame(tkinter.Frame):
+    def __init__(self, master):
+        super().__init__(master, width = 350, height = 500, bg="white")
+        
+        self.label = tkinter.Label(self, text="Search Course Page", font=('Times',12), bg="white")
+        self.label.place(x=20, y=30)
+
+        self.logout_button = tkinter.Button(self, text="Back", font=('Times',12),  bg="red", fg="white", bd=0, command=self.Back)
+        self.logout_button.place(x=285, y=30)
+
+        self.CRN_label = tkinter.Label(self, text="Enter CRN:", font=('Times',12), bg="white")
+        self.CRN_label.place(x=20, y=70)
+        self.CRN_entry = tkinter.Entry(self, highlightbackground='black', highlightthickness=1,bd=0,width=34,font=('Times',14))
+        self.CRN_entry.place(x=20, y=110)
+
+        self.search_button = tkinter.Button(self, text="Search Course", font=('Times',12),  bg="black", fg="white", bd=0)
+        self.search_button.place(x=20, y=150)
+               
+    def view_profile(self):
+        self.master.show_profile_frame()
+        
+    def Back(self):
+        self.master.show_student_Frame()
 
 if __name__ == "__main__":
     app = MainPage()
