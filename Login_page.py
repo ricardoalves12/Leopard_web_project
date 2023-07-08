@@ -4,7 +4,7 @@ import tkinter
 from PIL import ImageTk, Image 
 from tkinter import PhotoImage, messagebox
 import sqlite3
-
+import student
 
 
 class MainPage(tkinter.Tk):
@@ -70,15 +70,15 @@ class LoginFrame (tkinter.Frame):
         self.password_entry.delete(0, END)
         DbConnect = sqlite3.connect("Database/tables.db")
         db= DbConnect.cursor()         
-        db.execute("SELECT 1 FROM AUTHENTIFY  WHERE USERNAME = ? and PASSWORD = ? ", (username, password))
+        db.execute("SELECT 1 FROM AUTHENTIFY  WHERE USER_NAME = ? and PASSWORD = ? ", (username, password))
         result = db.fetchone()
         if result:
-            for row in db.execute("SELECT * FROM AUTHENTIFY  WHERE USERNAME = ? and PASSWORD = ? ", (username, password)):
-                if row[3] == 'STUDENT':
+            for row in db.execute("SELECT * FROM AUTHENTIFY  WHERE USER_NAME = ? and PASSWORD = ? ", (username, password)):
+                if row[1] == 'STUDENT':
                     self.master.show_student_Frame()
-                elif row[3] == 'ADMIN':
+                elif row[1] == 'ADMIN':
                     self.master.show_home_frame()
-                elif row[3] == 'INSTRUCTOR':
+                elif row[1] == 'INSTRUCTOR':
                     self.master.show_home_frame()
                 else:
                     messagebox.showerror("User type failed", "Invalid User type.")
@@ -130,11 +130,14 @@ class StudentSearchClassFrame(tkinter.Frame):
         self.CRN_entry = tkinter.Entry(self, highlightbackground='black', highlightthickness=1,bd=0,width=34,font=('Times',14))
         self.CRN_entry.place(x=20, y=110)
 
-        self.search_button = tkinter.Button(self, text="Search Course", font=('Times',12),  bg="black", fg="white", bd=0)
+        self.search_button = tkinter.Button(self, text="Search Course", font=('Times',12),  bg="black", fg="white", bd=0, command=self.SearchCourse)
         self.search_button.place(x=20, y=150)
                
-    def view_profile(self):
-        self.master.show_profile_frame()
+    def SearchCourse(self):
+        CRN = self.CRN_entry.get()
+       
+        # call the Student class to print data base
+        student.Student.search_Course(self,CRN)
         
     def Back(self):
         self.master.show_student_Frame()
