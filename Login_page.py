@@ -131,7 +131,7 @@ class StudentSearchClassFrame(tkinter.Frame):
         self.CRN_entry.place(x=20, y=110)
 
         self.search_button = tkinter.Button(self, text="Search Course", font=('Times',12),  bg="black", fg="white", bd=0, command=self.SearchCourse)
-        self.search_button.place(x=20, y=150)
+        self.search_button.place(x=20, y=151)
                
     def SearchCourse(self):
         CRN = self.CRN_entry.get()
