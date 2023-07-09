@@ -19,6 +19,9 @@ class Admin(User):
              self.cursor=self.connect.cursor()
     
     def search_Course(self,crn):
+          self.connect=sqlite3.connect("Database/tables.db")
+          self.cursor=self.connect.cursor()
+    
           
           Fetch="""SELECT * FROM COURSE WHERE CRN =? """
           course_crn=crn
@@ -50,27 +53,6 @@ class Admin(User):
       
       self.cursor.execute(Value,Values)
       self.connect.commit()
-
-
-print(" Hello new user ")
-Name=input("Can you please enter your first name: ")
-Name2=input("Can you please enter your last name: ")
-id = random.randint(1000,3000)
-status=input("Please enter your status at the school :")
-New_User=User(Name,Name2,id,"ADMIN")
-
-if New_User.status=="ADMIN":
-   if New_User.first_name=="Margaret" or New_User.first_name=="Vera": 
-     Title=input(" Enter your title :")
-     office=input("Enter your work office: ")
-     New_Admin=Admin(Name,Name2,id,status,Title,office)
-     New_Admin.Connect()
-
-     #New_Admin.Add(478,"CALCULUS","T/R","2:00-3:00","Lou")
-     New_Admin.Remove(234)
-     New_Admin.Disconnect()
-
-
 
 
 
