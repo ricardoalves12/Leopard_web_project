@@ -16,8 +16,11 @@ if result:
 else:
     print(f"{Teacher} not teaching {Course}")
 
-
-cursor.execute("DELETE FROM STUDENT WHERE NAME='Tomasso'")
+#cursor.execute("ALTER TABLE COURSE DROP COLUMN ROASTER")
+#cursor.execute("DELETE FROM STUDENT WHERE NAME='Tomasso'")
 database.commit()
 
-
+#Value ="""INSERT INTO COURSE(CRN,COURSE_NAME,COURSE_DAY,COURSE_TIME,INSTRUCTOR_NAME) VALUES(?,?,?,?,?)"""
+#cursor.execute("DROP TABLE COURSE ")
+cursor.execute("""INSERT INTO COURSE(CRN,COURSE_NAME,COURSE_DAY,COURSE_TIME,INSTRUCTOR_NAME) VALUES(158,"APLLIED PROGRAMING","M\F","7:00-8:00","Blake")""")
+database.commit()
