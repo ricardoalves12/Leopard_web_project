@@ -57,21 +57,37 @@ class Student(User):
            return Added
         
        def update(self,crn,student_name):
-            Fetch="""SELECT ROASTER FROM COURSE WHERE CRN =? """
+            Fetch="""SELECT ROSTER FROM COURSE WHERE CRN =? """
             course_crn=crn
             self.cursor.execute(Fetch,(course_crn,))
             result=self.cursor.fetchone()
             
-            if result:
-                New=result[0]
-                New_roster=New.split(',')
+            if result[0] is None:
+                
+                Array=[]
+                Array.append(student_name)
+                New_roster='\n'.join(Array)
+                Update="""UPDATE COURSE SET ROSTER=? WHERE CRN=? """
+                self.cursor.execute(Update,(str(New_roster),course_crn))
             else:
-                 update_roster="\n".join(student_name)
-            New_roster.extend(student_name)
-            update_roster="\n".join(New_roster)
-            Update="""UPDATE COURSE SET ROASTER=? WHERE CRN=? """
-            self.cursor.execute(Update,(update_roster,course_crn))
+                 New=result[0]
+                 New_roster=New.split('\n')
+                 New_roster.append(student_name)
+                 Update_roster='\n'.join(New_roster)
+                 Update="""UPDATE COURSE SET ROSTER=? WHERE CRN=? """
+                 self.cursor.execute(Update,(str(Update_roster),course_crn))
+
+
             self.connect.commit()
+            
+                
+          
+            # New_roster.extend(student_name)
+            # update_roster="\n".join(New_roster)
+            # Update="""UPDATE COURSE SET ROASTER=? WHERE CRN=? """
+            # self.cursor.execute(Update,(update_roster,course_crn))
+            # self.connect.commit()
+
            
 
        
@@ -80,6 +96,7 @@ class Student(User):
        
        def Remove(self,Course_number):
          del self.schedule[Course_number]
+
        
        def display_schedule(self):
          for row in self.schedule:
