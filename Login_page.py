@@ -5,6 +5,7 @@ from PIL import ImageTk, Image
 from tkinter import PhotoImage, messagebox
 import sqlite3
 import student
+import Teacher
 
 
 class MainPage(tkinter.Tk):
@@ -276,8 +277,8 @@ class InstructorSearchClassFrame(tkinter.Frame):
         CRN = self.CRN_entry.get()
         self.CRN_entry.delete(0, END)
        
-        # call the Student class to print data base
-        student.Student.search_Course(self,CRN)
+        # call the Teacher class to print data base
+        Teacher.Teacher.search_Course(self, CRN)
         
     def Back(self):
         self.master.show_Instructor_Frame()
