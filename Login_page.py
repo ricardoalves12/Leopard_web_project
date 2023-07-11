@@ -25,6 +25,7 @@ class MainPage(tkinter.Tk):
         self.student_search_class_frame = StudentSearchClassFrame(self)
         self.instructor_search_class_frame = InstructorSearchClassFrame(self)
         self.admin_search_class_frame = AdminSearchClassFrame(self) 
+        self.student_add_course_frame = StudentAddCourseFrame(self)
         self.ShowLoginFrame()
 
 
@@ -38,6 +39,7 @@ class MainPage(tkinter.Tk):
         self.instructor_search_class_frame.place_forget()
         self.Instructor_frame.place_forget()
         self.Admin_frame.place_forget()
+        self.student_add_course_frame.place_forget()
         self.admin_search_class_frame.place_forget()
 
     def show_student_Frame(self):
@@ -49,6 +51,7 @@ class MainPage(tkinter.Tk):
         self.instructor_search_class_frame.place_forget()
         self.Instructor_frame.place_forget()
         self.Admin_frame.place_forget()
+        self.student_add_course_frame.place_forget()
         self.admin_search_class_frame.place_forget()
     
     def show_Instructor_Frame(self):
@@ -60,6 +63,7 @@ class MainPage(tkinter.Tk):
         self.Admin_frame.place_forget()
         self.instructor_search_class_frame.place_forget()
         self.student_search_class_frame.place_forget()
+        self.student_add_course_frame.place_forget()
         self.admin_search_class_frame.place_forget()
      
     def show_Admin_Frame(self):
@@ -71,6 +75,7 @@ class MainPage(tkinter.Tk):
         self.instructor_search_class_frame.place_forget()
         self.Instructor_frame.place_forget()
         self.admin_search_class_frame.place_forget()
+        self.student_add_course_frame.place_forget()
         self.student_search_class_frame.place_forget()
 
         
@@ -83,6 +88,7 @@ class MainPage(tkinter.Tk):
         self.instructor_search_class_frame.place_forget()
         self.Instructor_frame.place_forget()
         self.Admin_frame.place_forget()
+        self.student_add_course_frame.place_forget()
         self.admin_search_class_frame.place_forget()
 
     def show_instructor_search_Class_Frame(self):
@@ -94,6 +100,7 @@ class MainPage(tkinter.Tk):
         self.Instructor_frame.place_forget()
         self.instructor_search_class_frame.place(x=((width_screen/2) -200),y=((height_screen/2) -380))
         self.Admin_frame.place_forget()
+        self.student_add_course_frame.place_forget()
         self.admin_search_class_frame.place_forget()
 
     def show_admin_search_Class_Frame(self):
@@ -105,7 +112,20 @@ class MainPage(tkinter.Tk):
         self.Instructor_frame.place_forget()
         self.instructor_search_class_frame.place_forget()
         self.Admin_frame.place_forget()
+        self.student_add_course_frame.place_forget()
         self.admin_search_class_frame.place(x=((width_screen/2) -200),y=((height_screen/2) -380))
+
+    def show_student_add_Course_Frame(self):
+        width_screen= self.winfo_screenwidth()
+        height_screen= self.winfo_screenheight()
+        self.login_frame.place_forget()
+        self.student_frame.place_forget()
+        self.student_search_class_frame.place_forget()
+        self.Instructor_frame.place_forget()
+        self.instructor_search_class_frame.place_forget()
+        self.Admin_frame.place_forget()
+        self.student_add_course_frame.place(x=((width_screen/2) -200),y=((height_screen/2) -380))
+        self.admin_search_class_frame.place_forget()
 
 class LoginFrame (tkinter.Frame):
     def __init__(self, master):
@@ -161,7 +181,7 @@ class StudenthomeFrame(tkinter.Frame):
         self.logout_button = tkinter.Button(self, text="Search Course", font=('Times',12),  bg="black", fg="white", bd=0, command=self.SearchClass)
         self.logout_button.place(x=20, y=70)
 
-        self.logout_button = tkinter.Button(self, text="Add Course", font=('Times',12),  bg="black", fg="white", bd=0, command=self.logout)
+        self.logout_button = tkinter.Button(self, text="Add Course", font=('Times',12),  bg="black", fg="white", bd=0, command=self.AddCourse)
         self.logout_button.place(x=20, y=110)
 
         self.logout_button = tkinter.Button(self, text="Drop Course", font=('Times',12),  bg="black", fg="white", bd=0, command=self.logout)
@@ -173,7 +193,10 @@ class StudenthomeFrame(tkinter.Frame):
         
     def SearchClass(self):
         self.master.show_student_search_Class_Frame()
-        
+    
+    def AddCourse(self):
+        self.master.show_student_add_Course_Frame()
+
     def logout(self):
         self.master.ShowLoginFrame()
 
@@ -266,6 +289,34 @@ class StudentSearchClassFrame(tkinter.Frame):
         self.search_button.place(x=20, y=151)
                
     def SearchCourse(self):
+        CRN = self.CRN_entry.get()
+        self.CRN_entry.delete(0, END)
+       
+        # call the Student class to print data base
+        student.Student.search_Course(self,CRN)
+        
+    def Back(self):
+        self.master.show_student_Frame()
+
+class StudentAddCourseFrame(tkinter.Frame):
+    def __init__(self, master):
+        super().__init__(master, width = 350, height = 500, bg="white")
+        
+        self.label = tkinter.Label(self, text="ADD Course Page", font=('Times',12), bg="white")
+        self.label.place(x=20, y=30)
+
+        self.logout_button = tkinter.Button(self, text="Back", font=('Times',12),  bg="red", fg="white", bd=0, command=self.Back)
+        self.logout_button.place(x=285, y=30)
+
+        self.CRN_label = tkinter.Label(self, text="Enter CRN:", font=('Times',12), bg="white")
+        self.CRN_label.place(x=20, y=70)
+        self.CRN_entry = tkinter.Entry(self, highlightbackground='black', highlightthickness=1,bd=0,width=34,font=('Times',14))
+        self.CRN_entry.place(x=20, y=110)
+
+        self.search_button = tkinter.Button(self, text="ADD Course", font=('Times',12),  bg="black", fg="white", bd=0, command=self.AddCourse)
+        self.search_button.place(x=20, y=151)
+               
+    def AddCourse(self):
         CRN = self.CRN_entry.get()
         self.CRN_entry.delete(0, END)
        
