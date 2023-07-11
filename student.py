@@ -4,23 +4,6 @@ import random
 class Student(User):
        def __init__(self):
           super().__init__()
-          
-       def Connect(self):
-          self.connect=sqlite3.connect("Leopard_web_project/Database/tables.db")
-          self.cursor=self.connect.cursor()
-        
-       def Disconnect(self):
-          if self.connect:
-            self.cursor.close()
-       def implement(self):
-            
-            Update="""INSERT INTO STUDENT VALUES(?,?,?,?,?,?)"""
-            Values=(self.ID,self.first_name,self.last_name,self.Major,self.graduate,self.Email)
-            self.cursor.execute(Update,Values)
-            self.connect.commit()
-            
-
-            
 
        def search_Course(self,crn):
           self.connect=sqlite3.connect("Database/tables.db")

@@ -12,7 +12,7 @@ import Admin
 class MainPage(tkinter.Tk):
     def __init__(self):
         super().__init__()
-        self.title("Login") 
+        self.title("Leopard Web") 
         #setting page geometry to the size of the user's screen
         width_screen= self.winfo_screenwidth()
         height_screen= self.winfo_screenheight()
