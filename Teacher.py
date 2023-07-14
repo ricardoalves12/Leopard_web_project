@@ -44,7 +44,7 @@ class Teacher(User):
             print("Course doesn't exist ")
             
          def print(self,crn):
-            Fetch=""" SELECT 1 FROM COURSE WHERE INSTRUCTOR_NAME=? AND CRN=? """
+            Fetch=""" SELECT ROSTER FROM COURSE WHERE INSTRUCTOR_NAME=? AND CRN=? """
             Value=(self.first_name,crn)
             self.cursor.execute(Fetch,(Value),)
             result=self.cursor.fetchone()
@@ -63,8 +63,8 @@ New_User.Connect()
 #New_User.implement()
 
 if New_User.status=="INSTRUCTOR":
-     Department=input(" Please enter your major: ")
-     hire_year=input(" when do you expect to gradute: ")
+     Department=input(" Please enter your department: ")
+     hire_year=input(" when did you start : ")
      hire=int(hire_year)
      Title=input("What is your position: ")
      New_Teacher=Teacher(Name,Name2,id,Department,status,Title,hire)

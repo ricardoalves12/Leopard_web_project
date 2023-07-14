@@ -66,7 +66,7 @@ if New_User.status=="ADMIN":
      New_Admin=Admin(Name,Name2,id,status,Title,office)
      New_Admin.Connect()
 
-     #New_Admin.Add(478,"CALCULUS","T/R","2:00-3:00","Lou")
+     New_Admin.Add(478,"CALCULUS","T/R","2:00-3:00","Lou")
      New_Admin.Remove(234)
      New_Admin.Disconnect()
 

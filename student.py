@@ -23,7 +23,7 @@ class Student(User):
        def implement(self):
             
             Update="""INSERT INTO STUDENT VALUES(?,?,?,?,?,?)"""
-            Values=(self.ID,self.first_name,self.last_name,self.Major,self.graduate,self.Email)
+            Values=(self.ID,self.first_name,self.last_name,self.graduate,self.Major,self.Email)
             self.cursor.execute(Update,Values)
             self.connect.commit()
             
@@ -103,6 +103,42 @@ class Student(User):
        
        def Remove(self,Course_number):
          del self.schedule[Course_number]
+        
+       def update_schedule(self,CRN):
+        Value="SELECT * FROM COURSE WHERE CRN=? "
+        Vals=(CRN,)
+        self.cursor.execute(Value,Vals)
+        result=self.cursor.fetchall()
+        for row in result:
+            CRN=row[0]
+            Course_name=row[1]
+            Course_day=row[2]
+            Course_time=row[3]
+            Instructor=row[4]
+        Update=(f"CRN: {CRN} |Course name : {Course_name} |Course day: {Course_day}| Course time: {Course_time} | Instructor: {Instructor}")
+        value="SELECT SCHEDULE FROM STUDENT WHERE NAME=? "
+        vals=(self.first_name,)
+        self.cursor.execute(value,vals)
+        Result=self.cursor.fetchone()
+        if Result[0] is None:
+            Schedule_data=[]
+            Schedule_data.append(Update)
+            schedule_data= '\n'.join(Schedule_data)
+            Function="UPDATE STUDENT SET SCHEDULE=? WHERE NAME=?"
+            self.cursor.execute(Function,(schedule_data,self.first_name))
+            self.connect.commit()
+        else:
+            imported=Result[0]
+            Schedule_data=imported.split('\n')
+            Schedule_data.append(Update)
+            schedule_data= '\n'.join(Schedule_data)
+            Function="UPDATE STUDENT SET SCHEDULE=? WHERE NAME=?"
+            self.cursor.execute(Function(schedule_data,self.first_name))
+            self.connect.commit()
+
+
+
+        
 
        
        def display_schedule(self):
@@ -132,13 +168,14 @@ if New_User.status=="STUDENT":
       print('\n')
      elif command=="2":
       print(New_student.Add_Course(234))
-      New_student.Append(234)
-      New_student.Append(205)
-      New_student.Add_Course(120)
-      New_student.update(35,New_student.first_name)
+      New_student.Append(158)
+      New_student.Append(35)
+      New_student.Add_Course(158)
+      #New_student.update(35,New_student.first_name)
+      New_student.update_schedule(35)
       for key,value in New_student.schedule.items():
          print(f"{key} : {value}")
-      New_student.Remove(205)
+      New_student.Remove(158)
       print("\n")
       for key,value in New_student.schedule.items():
          print(f"{key} : {value}")
