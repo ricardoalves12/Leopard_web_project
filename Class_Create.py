@@ -35,8 +35,8 @@ class Class_Creator:
         COURSE_NAME TEXT NOT NULL,
         COURSE_DAY TEXT NOT NULL,
         COURSE_TIME TEXT NOT NULL,
-        INSTRUCTOR_NAME TEXT NOT NULL
-        PRIMARY KEY
+        INSTRUCTOR_NAME TEXT NOT NULL,
+        PRIMARY KEY(CRN)
         );""")
        self.connect.commit()
         
@@ -55,14 +55,26 @@ class Class_Creator:
      Val=f""" ALTER TABLE {New_variable} ADD COLUMN {col};"""
      self.cursor.execute(Val)
      self.connect.commit()
-
+   
+   def Alter_delete(self,col,New_variable):
+     Val=f""" ALTER TABLE {New_variable} ADD COLUMN {col} TEXT;"""
+     self.cursor.execute(Val)
+     self.connect.commit()
 Database=Class_Creator("Leopard_web_project/Database/tables.db")
 Database.Connect()
-Database.Alter("ROASTER","COURSE")
-
-Dict={}
-Dict[45]="Dog"
-
-
+#Database.Alter("ROASTER","COURSE")
+# Database.Alter_delete("ROSTER","COURSE")
+# Dict={}
+# Dict[45]="Dog"
+#Database.Alter_delete("SCHEDULE","STUDENT")
+Database.cursor.execute("""DELETE SET SCHEDULE FROM STUDENT WHERE NAME='Konn';""")
+Array=[]
+Array.append("Jake")
+Update_Array='\n'.join(Array)
+print(str(Update_Array))
 Database.Disconnect()
-
+Array2=Update_Array.split('\n')
+Array2.append("Luke")
+Update='\n'.join(Array2)
+print(str(Update))
+Database.Disconnect()

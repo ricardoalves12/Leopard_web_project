@@ -1,5 +1,5 @@
 import sqlite3
-
+import random
 class User:
     
     def __init__(self,F_mame,L_name,Id,status):
@@ -18,13 +18,38 @@ class User:
        if self.connect:
         self.cursor.close()
     
+    def search_Course(self,crn):
+          
+          Fetch="""SELECT * FROM COURSE WHERE CRN =? """
+          course_crn=crn
+          self.cursor.execute(Fetch,(course_crn,))
+          result= self.cursor.fetchall()
+          if result:
+           for row in result:
+             CRN=row[0]
+             Course_name=row[1]
+             Course_day=row[2]
+             Course_time=row[3]
+             Instructor_name=row[4]
+           print(f"CRN: {CRN} \n Course name: {Course_name}\n Course day : {Course_day}\n Course time: {Course_time}\n Teacher: {Instructor_name}")
+          else:
+            print("Course doesn't exist ")
     def implement(self):
         Value="""INSERT INTO AUTHENTIFY(USER_ID,STATUS,FIRST_NAME,LAST_NAME,USER_NAME) VALUES (?,?,?,?,?)"""
         User_name= self.last_name + self.first_name[0]
         Values=(self.ID,self.status,self.first_name,self.last_name,User_name)
         self.cursor.execute(Value,Values)
         self.connect.commit()
-     
+
+print(" Hello new user ")
+Name=input("Can you please enter your first name: ")
+Name2=input("Can you please enter your last name: ")
+id = random.randint(1000,3000)
+status=input("Please enter your status at the school :")
+New_User=User(Name,Name2,id,status)
+New_User.Connect()
+New_User.search_Course(120)   
+New_User.Disconnect()
 # New_User=User("Tomasso","Verdignolet",2001,"STUDENT")
 # New_User.Connect()
 # New_User.implement()
