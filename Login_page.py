@@ -3,15 +3,20 @@ import tkinter
 #pip install pillow
 from PIL import ImageTk, Image 
 from tkinter import PhotoImage, messagebox
+from tkinter.messagebox import *
 import sqlite3
 import student
 import Teacher
 import Admin
 
+global UserId
 
 class MainPage(tkinter.Tk):
     def __init__(self):
         super().__init__()
+
+        self.user_id = None
+        self.user_name = None
         self.title("Leopard Web") 
         #setting page geometry to the size of the user's screen
         width_screen= self.winfo_screenwidth()
@@ -26,9 +31,15 @@ class MainPage(tkinter.Tk):
         self.instructor_search_class_frame = InstructorSearchClassFrame(self)
         self.admin_search_class_frame = AdminSearchClassFrame(self) 
         self.student_add_course_frame = StudentAddCourseFrame(self)
-        self.admin_add_class_frame = AdminAddClassFrame(self) 
+        self.admin_add_class_frame = AdminAddClassFrame(self)
+        self.student_remove_course_frame = StudentDropCourseFrame(self)
         self.ShowLoginFrame()
 
+    def updateUserId_name(self, new_id, new_name):
+        self.user_id = new_id
+        self.user_name = new_name
+        self.student_frame = StudenthomeFrame(self)
+        
 
     def ShowLoginFrame(self):
         #setting page geometry to the size of the user's screen
@@ -42,6 +53,7 @@ class MainPage(tkinter.Tk):
         self.Admin_frame.place_forget()
         self.student_add_course_frame.place_forget()
         self.admin_search_class_frame.place_forget()
+        self.student_remove_course_frame.place_forget()
 
     def show_student_Frame(self):
         width_screen= self.winfo_screenwidth()
@@ -54,6 +66,7 @@ class MainPage(tkinter.Tk):
         self.Admin_frame.place_forget()
         self.student_add_course_frame.place_forget()
         self.admin_search_class_frame.place_forget()
+        self.student_remove_course_frame.place_forget()
     
     def show_Instructor_Frame(self):
         width_screen= self.winfo_screenwidth()
@@ -66,6 +79,7 @@ class MainPage(tkinter.Tk):
         self.student_search_class_frame.place_forget()
         self.student_add_course_frame.place_forget()
         self.admin_search_class_frame.place_forget()
+        self.student_remove_course_frame.place_forget()
      
     def show_Admin_Frame(self):
         width_screen= self.winfo_screenwidth()
@@ -79,6 +93,7 @@ class MainPage(tkinter.Tk):
         self.student_add_course_frame.place_forget()
         self.student_search_class_frame.place_forget()
         self.admin_add_class_frame.place_forget()
+        self.student_remove_course_frame.place_forget()
         
     def show_student_search_Class_Frame(self):
         width_screen= self.winfo_screenwidth()
@@ -92,6 +107,7 @@ class MainPage(tkinter.Tk):
         self.student_add_course_frame.place_forget()
         self.admin_search_class_frame.place_forget()
         self.admin_add_class_frame.place_forget()
+        self.student_remove_course_frame.place_forget()
 
     def show_instructor_search_Class_Frame(self):
         width_screen= self.winfo_screenwidth()
@@ -105,6 +121,7 @@ class MainPage(tkinter.Tk):
         self.student_add_course_frame.place_forget()
         self.admin_search_class_frame.place_forget()
         self.admin_add_class_frame.place_forget()
+        self.student_remove_course_frame.place_forget()
 
     def show_admin_search_Class_Frame(self):
         width_screen= self.winfo_screenwidth()
@@ -118,6 +135,7 @@ class MainPage(tkinter.Tk):
         self.student_add_course_frame.place_forget()
         self.admin_search_class_frame.place(x=((width_screen/2) -200),y=((height_screen/2) -380))
         self.admin_add_class_frame.place_forget()
+        self.student_remove_course_frame.place_forget()
 
     def show_student_add_Course_Frame(self):
         width_screen= self.winfo_screenwidth()
@@ -131,6 +149,7 @@ class MainPage(tkinter.Tk):
         self.student_add_course_frame.place(x=((width_screen/2) -200),y=((height_screen/2) -380))
         self.admin_search_class_frame.place_forget()
         self.admin_add_class_frame.place_forget()
+        self.student_remove_course_frame.place_forget()
 
     def show_admin_add_Class_Frame(self):
         width_screen= self.winfo_screenwidth()
@@ -143,7 +162,20 @@ class MainPage(tkinter.Tk):
         self.Admin_frame.place_forget()
         self.admin_add_class_frame.place(x=((width_screen/2) -200),y=((height_screen/2) -380))
         self.student_add_course_frame.place_forget()
-
+        self.student_remove_course_frame.place_forget()
+    
+    def show_student_drop_course_frame(self):
+        width_screen= self.winfo_screenwidth()
+        height_screen= self.winfo_screenheight()
+        self.login_frame.place_forget()
+        self.student_frame.place_forget()
+        self.student_search_class_frame.place_forget()
+        self.Instructor_frame.place_forget()
+        self.instructor_search_class_frame.place_forget()
+        self.Admin_frame.place_forget()
+        self.admin_add_class_frame.place_forget()
+        self.student_add_course_frame.place_forget()
+        self.student_remove_course_frame.place(x=((width_screen/2) -200),y=((height_screen/2) -380))
 
 class LoginFrame (tkinter.Frame):
     def __init__(self, master):
@@ -175,8 +207,9 @@ class LoginFrame (tkinter.Frame):
         result = db.fetchone()
         if result:
             for row in db.execute("SELECT * FROM AUTHENTIFY  WHERE USER_NAME = ? and PASSWORD = ? ", (username, password)):
-                if row[1] == 'STUDENT':
-                    self.master.show_student_Frame()
+                if row[1] == 'STUDENT':                                    
+                    self.master.updateUserId_name(f"{row[0]}", f"{row[2]}")
+                    self.master.show_student_Frame()  
                 elif row[1] == 'ADMIN':
                     self.master.show_Admin_Frame()
                 elif row[1] == 'INSTRUCTOR':
@@ -189,8 +222,8 @@ class LoginFrame (tkinter.Frame):
 class StudenthomeFrame(tkinter.Frame):
     def __init__(self, master):
         super().__init__(master, width = 350, height = 500, bg="white")
-        
-        self.label = tkinter.Label(self, text="Student Home Page", font=('Times',12), bg="white")
+       
+        self.label = tkinter.Label(self, text=f"{self.master.user_name} Home Page", font=('Times',12), bg="white")
         self.label.place(x=20, y=30)
 
         self.logout_button = tkinter.Button(self, text="Logout", font=('Times',12),  bg="red", fg="white", bd=0, command=self.logout)
@@ -202,7 +235,7 @@ class StudenthomeFrame(tkinter.Frame):
         self.logout_button = tkinter.Button(self, text="Add Course", font=('Times',12),  bg="black", fg="white", bd=0, command=self.AddCourse)
         self.logout_button.place(x=20, y=110)
 
-        self.logout_button = tkinter.Button(self, text="Drop Course", font=('Times',12),  bg="black", fg="white", bd=0, command=self.logout)
+        self.logout_button = tkinter.Button(self, text="Drop Course", font=('Times',12),  bg="black", fg="white", bd=0, command=self.DropCourse)
         self.logout_button.place(x=20, y=150)
 
         self.logout_button = tkinter.Button(self, text="Print schedule", font=('Times',12),  bg="black", fg="white", bd=0, command=self.logout)
@@ -210,8 +243,11 @@ class StudenthomeFrame(tkinter.Frame):
         
         
     def SearchClass(self):
-        self.master.show_student_search_Class_Frame()
+        tkinter.Listbox(self.master.show_student_search_Class_Frame())
     
+    def DropCourse(self):
+        self.master.show_student_drop_course_frame()
+
     def AddCourse(self):
         self.master.show_student_add_Course_Frame()
 
@@ -314,6 +350,34 @@ class StudentSearchClassFrame(tkinter.Frame):
         self.CRN_entry.delete(0, END)
        
         # call the Student class to print data base
+        tkinter.messagebox.showinfo("Course info",student.Student.search_Course(self,CRN))
+        
+    def Back(self):
+        self.master.show_student_Frame()
+
+class StudentDropCourseFrame(tkinter.Frame):
+    def __init__(self, master):
+        super().__init__(master, width = 350, height = 500, bg="white")
+        
+        self.label = tkinter.Label(self, text="Drop Course Page", font=('Times',12), bg="white")
+        self.label.place(x=20, y=30)
+
+        self.logout_button = tkinter.Button(self, text="Back", font=('Times',12),  bg="red", fg="white", bd=0, command=self.Back)
+        self.logout_button.place(x=285, y=30)
+
+        self.CRN_label = tkinter.Label(self, text="Enter CRN:", font=('Times',12), bg="white")
+        self.CRN_label.place(x=20, y=70)
+        self.CRN_entry = tkinter.Entry(self, highlightbackground='black', highlightthickness=1,bd=0,width=34,font=('Times',14))
+        self.CRN_entry.place(x=20, y=110)
+
+        self.search_button = tkinter.Button(self, text="Drop Course", font=('Times',12),  bg="black", fg="white", bd=0, command=self.SearchCourse)
+        self.search_button.place(x=20, y=151)
+               
+    def SearchCourse(self):
+        CRN = self.CRN_entry.get()
+        self.CRN_entry.delete(0, END)
+       
+        # call the Student class to print data base
         student.Student.search_Course(self,CRN)
         
     def Back(self):
@@ -370,7 +434,7 @@ class InstructorSearchClassFrame(tkinter.Frame):
         self.CRN_entry.delete(0, END)
        
         # call the Teacher class to print data base
-        Teacher.Teacher.search_Course(self, CRN)
+        tkinter.messagebox.showinfo("Course info",Teacher.Teacher.search_Course(self, CRN))
         
     def Back(self):
         self.master.show_Instructor_Frame()
@@ -398,7 +462,7 @@ class AdminSearchClassFrame(tkinter.Frame):
         self.CRN_entry.delete(0, END)
        
         # call the Teacher class to print data base
-        Admin.Admin.search_Course(self, CRN)
+        tkinter.messagebox.showinfo("Course info",Admin.Admin.search_Course(self, CRN))
         
     def Back(self):
         self.master.show_Admin_Frame()
