@@ -53,21 +53,3 @@ class Teacher(User):
             else:
                 print(f"{self.first_name} is not teaching this course ")
 
-print(" Hello new user ")
-Name=input("Can you please enter your first name: ")
-Name2=input("Can you please enter your last name: ")
-id = random.randint(1000,3000)
-status=input("Please enter your status at the school :")
-New_User=User(Name,Name2,id,"INSTRUCTOR")
-New_User.Connect()
-#New_User.implement()
-
-if New_User.status=="INSTRUCTOR":
-     Department=input(" Please enter your department: ")
-     hire_year=input(" when did you start : ")
-     hire=int(hire_year)
-     Title=input("What is your position: ")
-     New_Teacher=Teacher(Name,Name2,id,Department,status,Title,hire)
-     New_Teacher.Connect()
-     New_Teacher.print(35)
-     New_Teacher.Disconnect()

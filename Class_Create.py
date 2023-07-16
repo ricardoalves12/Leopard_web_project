@@ -67,7 +67,7 @@ Database.Connect()
 # Dict={}
 # Dict[45]="Dog"
 #Database.Alter_delete("SCHEDULE","STUDENT")
-Database.cursor.execute("""DELETE SET SCHEDULE FROM STUDENT WHERE NAME='Konn';""")
+Database.cursor.execute("""DROP  SET SCHEDULE FROM STUDENT WHERE NAME='Konn';""")
 Array=[]
 Array.append("Jake")
 Update_Array='\n'.join(Array)

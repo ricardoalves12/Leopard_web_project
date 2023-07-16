@@ -31,7 +31,7 @@ class User:
              Course_day=row[2]
              Course_time=row[3]
              Instructor_name=row[4]
-           print(f"CRN: {CRN} \n Course name: {Course_name}\n Course day : {Course_day}\n Course time: {Course_time}\n Teacher: {Instructor_name}")
+           print (f"CRN: {CRN} \n Course name: {Course_name}\n Course day : {Course_day}\n Course time: {Course_time}\n Teacher: {Instructor_name}")
           else:
             print("Course doesn't exist ")
     def implement(self):
@@ -41,22 +41,9 @@ class User:
         self.cursor.execute(Value,Values)
         self.connect.commit()
 
-print(" Hello new user ")
-Name=input("Can you please enter your first name: ")
-Name2=input("Can you please enter your last name: ")
-id = random.randint(1000,3000)
-status=input("Please enter your status at the school :")
-New_User=User(Name,Name2,id,status)
-New_User.Connect()
-New_User.search_Course(120)   
-New_User.Disconnect()
-# New_User=User("Tomasso","Verdignolet",2001,"STUDENT")
-# New_User.Connect()
-# New_User.implement()
-
-# if New_User.status=="STUDENT":
-#     New_student=Student("BCSO",2024)
-#     New_student.implement()
-
-#New_student.Disconnect()
-       
+    def print_all_course(self):
+      self.cursor.execute("SELECT * FROM COURSE ")
+      result=self.cursor.fetchall()
+      for row in result:
+        print(row)
+    

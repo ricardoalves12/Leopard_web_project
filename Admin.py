@@ -43,34 +43,15 @@ class Admin(User):
       Values=(id,C_Name,C_day,C_time,Instructor)
       self.cursor.execute(Value,Values)
       self.connect.commit()
+      return True
 
     def Remove(self,CRN):
       Value ="""DELETE FROM COURSE WHERE CRN=?"""
       Values=(CRN,)
       
+      
       self.cursor.execute(Value,Values)
       self.connect.commit()
-
-
-print(" Hello new user ")
-Name=input("Can you please enter your first name: ")
-Name2=input("Can you please enter your last name: ")
-id = random.randint(1000,3000)
-status=input("Please enter your status at the school :")
-New_User=User(Name,Name2,id,"ADMIN")
-
-if New_User.status=="ADMIN":
-   if New_User.first_name=="Margaret" or New_User.first_name=="Vera": 
-     Title=input(" Enter your title :")
-     office=input("Enter your work office: ")
-     New_Admin=Admin(Name,Name2,id,status,Title,office)
-     New_Admin.Connect()
-
-     New_Admin.Add(478,"CALCULUS","T/R","2:00-3:00","Lou")
-     New_Admin.Remove(234)
-     New_Admin.Disconnect()
-
-
-
+      return True
 
 
