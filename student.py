@@ -2,8 +2,33 @@ from user import User
 import sqlite3
 import random 
 class Student(User):
-       def __init__(self):
-          super().__init__()
+       def __init__(self,first_name,last_name,id,major,grad_year,status):
+          super().__init__(first_name,last_name,id,status)
+          
+          
+          self.Major=major
+          self.graduate=grad_year
+          self.Email= self.first_name + self.last_name[0] + " @wit.edu"
+          self.schedule={}
+          self.cursor=None
+          self.connect=None
+     
+       def Connect(self):
+          self.connect=sqlite3.connect("Leopard_web_project/Database/tables.db")
+          self.cursor=self.connect.cursor()
+        
+       def Disconnect(self):
+          if self.connect:
+            self.cursor.close()
+       def implement(self):
+            
+            Update="""INSERT INTO STUDENT VALUES(?,?,?,?,?,?)"""
+            Values=(self.ID,self.first_name,self.last_name,self.graduate,self.Major,self.Email)
+            self.cursor.execute(Update,Values)
+            self.connect.commit()
+            
+
+            
 
        def search_Course(self,crn):
           self.connect=sqlite3.connect("Database/tables.db")
@@ -19,11 +44,13 @@ class Student(User):
              Course_day=row[2]
              Course_time=row[3]
              Instructor_name=row[4]
-           print(f"CRN: {CRN}\n Course day : {Course_day}\n Course time: {Course_time}\n Teacher: {Instructor_name}")
+           return(f"CRN: {CRN}\n Course day : {Course_day}\n Course time: {Course_time}\n Teacher: {Instructor_name}")
           else:
-            print("Course doesn't exist ")
+            return("Course doesn't exist ")
             
        def Add_Course(self,crn):
+         self.connect=sqlite3.connect("Database/tables.db")
+         self.cursor=self.connect.cursor()
          Fetch="""SELECT * FROM COURSE WHERE CRN =? """
          course_crn=crn
          self.cursor.execute(Fetch,(course_crn,))
@@ -79,13 +106,45 @@ class Student(User):
        
        def Remove(self,Course_number):
          del self.schedule[Course_number]
-
-       
+        
+       def update_schedule(self,CRN):
+        Value="SELECT * FROM COURSE WHERE CRN=? "
+        Vals=(CRN,)
+        self.cursor.execute(Value,Vals)
+        result=self.cursor.fetchall()
+        for row in result:
+            CRN=row[0]
+            Course_name=row[1]
+            Course_day=row[2]
+            Course_time=row[3]
+            Instructor=row[4]
+        Update=(f"CRN: {CRN} |Course name : {Course_name} |Course day: {Course_day}| Course time: {Course_time} | Instructor: {Instructor}")
+        value="SELECT SCHEDULE FROM STUDENT WHERE NAME=? "
+        vals=(self.first_name,)
+        self.cursor.execute(value,vals)
+        Result=self.cursor.fetchone()
+        if Result[0] is None:
+            Schedule_data=[]
+            Schedule_data.append(Update)
+            schedule_data= '\n'.join(Schedule_data)
+            Function="UPDATE STUDENT SET SCHEDULE=? WHERE NAME=?"
+            self.cursor.execute(Function,(schedule_data,self.first_name))
+            self.connect.commit()
+        else:
+            imported=Result[0]
+            Schedule_data=imported.split('\n')
+            Schedule_data.append(Update)
+            schedule_data= '\n'.join(Schedule_data)
+            Function="UPDATE STUDENT SET SCHEDULE=? WHERE NAME=?"
+            self.cursor.execute(Function(schedule_data,self.first_name))
+            self.connect.commit()      
+      
        def display_schedule(self):
          for row in self.schedule:
             print(row)
 
 
+         
 
       
 
