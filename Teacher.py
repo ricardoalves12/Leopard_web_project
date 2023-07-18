@@ -33,18 +33,20 @@ class Teacher(User):
                  Course_day=row[2]
                  Course_time=row[3]
                  Instructor_name=row[4]
-               return(f"CRN: {CRN}\n Course day : {Course_day}\n Course time: {Course_time}\n Teacher: {Instructor_name}")
+               return(f"CRN: {CRN}\n Course day : {Course_day}\n Course Name: {Course_name}\n Course time: {Course_time}\n Teacher: {Instructor_name}")
               else:
                 return("Course doesn't exist ")
             
-         def print(self,crn):
-            Fetch=""" SELECT 1 FROM COURSE WHERE INSTRUCTOR_NAME=? AND CRN=? """
-            Value=(self.first_name,crn)
+         def Print_Class_List(self,crn, instructorName):
+            self.connect=sqlite3.connect("Database/tables.db")
+            self.cursor=self.connect.cursor()
+            Fetch=""" SELECT ROSTER FROM COURSE WHERE INSTRUCTOR_NAME=? AND CRN=? """
+            Value=(instructorName,crn)
             self.cursor.execute(Fetch,(Value),)
             result=self.cursor.fetchone()
             if result:
                 print(result[0])
             else:
-                return(f"{self.first_name} is not teaching this course ")
+                print(f"{instructorName} is not teaching this course ")
             
             self.cursor.close()

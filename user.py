@@ -41,15 +41,7 @@ class User:
         self.cursor.execute(Value,Values)
         self.connect.commit()
 
-print(" Hello new user ")
-Name=input("Can you please enter your first name: ")
-Name2=input("Can you please enter your last name: ")
-id = random.randint(1000,3000)
-status=input("Please enter your status at the school :")
-New_User=User(Name,Name2,id,status)
-New_User.Connect()
-New_User.search_Course(120)   
-New_User.Disconnect()
+
 # New_User=User("Tomasso","Verdignolet",2001,"STUDENT")
 # New_User.Connect()
 # New_User.implement()

@@ -44,7 +44,7 @@ class Student(User):
              Course_day=row[2]
              Course_time=row[3]
              Instructor_name=row[4]
-           return(f"CRN: {CRN}\n Course day : {Course_day}\n Course time: {Course_time}\n Teacher: {Instructor_name}")
+           return(f"CRN: {CRN}\n Course day : {Course_day}\n Course Name: {Course_name}\n Course time: {Course_time}\n Teacher: {Instructor_name}")
           else:
             return("Course doesn't exist ")
             

@@ -91,6 +91,7 @@ class MainPage(tkinter.Tk):
         self.student_add_course_frame.place_forget()
         self.admin_search_class_frame.place_forget()
         self.student_remove_course_frame.place_forget()
+        self.instructor_Print_Class_Frame.place_forget()
      
     def show_instructor_Print_Class_List_Frame(self):
         width_screen= self.winfo_screenwidth()
@@ -234,8 +235,10 @@ class LoginFrame (tkinter.Frame):
                     self.master.updateUserId_name(f"{row[0]}", f"{row[2]}")
                     self.master.show_student_Frame()  
                 elif row[1] == 'ADMIN':
+                    self.master.updateUserId_name(f"{row[0]}", f"{row[2]}")
                     self.master.show_Admin_Frame()
                 elif row[1] == 'INSTRUCTOR':
+                    self.master.updateUserId_name(f"{row[0]}", f"{row[2]}")
                     self.master.show_Instructor_Frame()
                 else:
                     messagebox.showerror("User type failed", "Invalid User type.")
@@ -245,24 +248,30 @@ class LoginFrame (tkinter.Frame):
 class StudenthomeFrame(tkinter.Frame):
     def __init__(self, master):
         super().__init__(master, width = 350, height = 500, bg="white")
-       
-        self.label = tkinter.Label(self, text=f"{self.master.user_name} Home Page", font=('Times',12), bg="white")
-        self.label.place(x=20, y=30)
+
+        self.label = tkinter.Label(self, text=f"User: {self.master.user_name}", font=('Times',12), bg="white")
+        self.label.place(x=20, y=20)
 
         self.logout_button = tkinter.Button(self, text="Logout", font=('Times',12),  bg="red", fg="white", bd=0, command=self.logout)
-        self.logout_button.place(x=285, y=30)
+        self.logout_button.place(x=285, y=20)
+
+        self.label = tkinter.Label(self, text=f"ID: {self.master.user_id}", font=('Times',12), bg="white")
+        self.label.place(x=20, y=50)
+       
+        self.label = tkinter.Label(self, text="Student Home Page", font=('Times',12), bg="white")
+        self.label.place(x=120, y=70)
 
         self.logout_button = tkinter.Button(self, text="Search Course", font=('Times',12),  bg="black", fg="white", bd=0, command=self.SearchClass)
-        self.logout_button.place(x=20, y=70)
+        self.logout_button.place(x=20, y=120)
 
         self.logout_button = tkinter.Button(self, text="Add Course", font=('Times',12),  bg="black", fg="white", bd=0, command=self.AddCourse)
-        self.logout_button.place(x=20, y=110)
+        self.logout_button.place(x=20, y=160)
 
         self.logout_button = tkinter.Button(self, text="Drop Course", font=('Times',12),  bg="black", fg="white", bd=0, command=self.DropCourse)
-        self.logout_button.place(x=20, y=150)
+        self.logout_button.place(x=20, y=200)
 
         self.logout_button = tkinter.Button(self, text="Print schedule", font=('Times',12),  bg="black", fg="white", bd=0, command=self.logout)
-        self.logout_button.place(x=20, y=190)
+        self.logout_button.place(x=20, y=240)
         
         
     def SearchClass(self):
@@ -328,7 +337,7 @@ class InstructorPrintFrame(tkinter.Frame):
         self.CRN_entry.delete(0, END)
        
         # call the Teacher class to print data base
-        Teacher.Teacher.Print_Class_List(self, CRN)
+        Teacher.Teacher.Print_Class_List(self, CRN,self.master.user_name)
         
     def Back(self):
         self.master.show_Instructor_Frame()
