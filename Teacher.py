@@ -26,6 +26,8 @@ class Teacher(User):
             Values=(self.id,self.first_name,self.last_name,self.title,self.hire,self.department,self.Email)
             self.cursor.execute(Update,Values)
             self.connect.commit()
+        
+        
          def search_Course(self,crn):
           
           Fetch="""SELECT * FROM COURSE WHERE CRN =? """
@@ -52,4 +54,3 @@ class Teacher(User):
                 print(result[0])
             else:
                 print(f"{self.first_name} is not teaching this course ")
-

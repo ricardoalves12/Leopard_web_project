@@ -14,7 +14,7 @@ class Student(User):
           self.connect=None
      
        def Connect(self):
-          self.connect=sqlite3.connect("Leopard_web_project/Database/tables.db")
+          self.connect=sqlite3.connect("Documents/LeoRepo/Leopard_web_project/Database/tables.db")
           self.cursor=self.connect.cursor()
         
        def Disconnect(self):
@@ -48,20 +48,25 @@ class Student(User):
             print("Course doesn't exist ")
             
        def Add_Course(self,crn):
-         Fetch="""SELECT * FROM COURSE WHERE CRN =? """
-         course_crn=crn
-         self.cursor.execute(Fetch,(course_crn,))
-         result= self.cursor.fetchall()
-         for row in result:
-           CRN=row[0]
-           Course_name=row[1]
-           Course_day=row[2]
-           Course_time=row[3]
-           Instructor_name=row[4]
-           Added=f"[{Course_name}|{Course_day}|{Course_time}|{Instructor_name}]"
-           
+          Value="""SELECT * FROM  COURSE WHERE CRN=?"""
+          self.cursor.execute(Value,(crn,))
+          Schedule=self.cursor.fetchall()
+          for element in Schedule:
+            CRN=element[0]
+            C_NAME=element[1]
+            S_DAY=element[2]
+            E_DAY=element[3]
+            S_TIME=element[4]
+            E_TIME=element[5]
+            T_NAME=element[6]
+          Value="""INSERT INTO SCHEDULE(ID,ST_NAME,CRN,COURSE,S_DAY,E_DAY,S_TIME,E_TIME,T_NAME) VALUES(?,?,?,?,?,?,?,?,?)"""  
+          Val=(self.ID,self.first_name,CRN,C_NAME,S_DAY,E_DAY,S_TIME,E_TIME,T_NAME)
+          self.cursor.execute(Value,(Val))
+          self.connect.commit()
 
-           return Added
+            
+
+           
         
        def update(self,crn,student_name):
             Fetch="""SELECT ROSTER FROM COURSE WHERE CRN =? """
@@ -95,6 +100,25 @@ class Student(User):
        
        def Append(self,Course_number):
          self.schedule[Course_number]= self.Add_Course(Course_number)
+         Fetch="""SELECT ROSTER FROM COURSE WHERE CRN =? """
+         course_crn=Course_number
+         self.cursor.execute(Fetch,(course_crn,))
+         result=self.cursor.fetchone()
+            
+         if result[0] is None:
+                
+           Array=[]
+           Array.append(self.first_name)
+           New_roster='\n'.join(Array)
+           Update="""UPDATE COURSE SET ROSTER=? WHERE CRN=? """
+           self.cursor.execute(Update,(str(New_roster),course_crn))
+         else:
+            New=result[0]
+            New_roster=New.split('\n')
+            New_roster.append(self.first_name)
+            Update_roster='\n'.join(New_roster)
+            Update="""UPDATE COURSE SET ROSTER=? WHERE CRN=? """
+            self.cursor.execute(Update,(str(Update_roster),course_crn))
        
        def Remove(self,Course_number):
          del self.schedule[Course_number]
@@ -110,8 +134,13 @@ class Student(User):
          Update="""UPDATE COURSE SET ROSTER=? WHERE CRN=? """
          self.cursor.execute(Update,(Update_roster,course_crn))
          self.connect.commit()
+         print(Update_roster)
         
        def update_schedule(self,CRN):
+        Update_array=[]
+        for key ,elemement in self.schedule.items:
+            Update_array.append(self.schedule[elemement])
+
         Value="SELECT * FROM COURSE WHERE CRN=? "
         Vals=(CRN,)
         self.cursor.execute(Value,Vals)
@@ -152,3 +181,15 @@ class Student(User):
          for row, element in self.schedule.items():
             print(row,element)
 
+       def UPDATE(self):
+         
+         Update_array=[]
+         for key,element in self.schedule.items():
+            Update_array.append(element)
+            Upd='|'.join(Update_array)
+            Up="""UPDATE STUDENT SET SCHEDULE=? WHERE NAME=? """
+            self.cursor.execute(Up,(Upd,self.first_name),)
+            self.connect.commit()
+            print(Upd)
+
+            

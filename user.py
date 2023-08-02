@@ -11,7 +11,7 @@ class User:
     
     def Connect(self):
          
-        self.connect=sqlite3.connect("Leopard_web_project/Database/tables.db")
+        self.connect=sqlite3.connect("Documents/LeoRepo/Leopard_web_project/Database/tables.db")
         self.cursor=self.connect.cursor()
     
     def Disconnect(self):
