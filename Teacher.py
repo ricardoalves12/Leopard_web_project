@@ -2,51 +2,35 @@ import sqlite3
 import random
 from user import User
 class Teacher(User):
-         def __init__(self):
-             super().__init__()            
+         def __init__(self,first_name,last_name,ID):
+             super().__init__(first_name,last_name,ID) 
          
-         def Connect(self):
-             self.connect=sqlite3.connect("Leopard_web_project/Database/tables.db")
-             self.cursor=self.connect.cursor()
-        
-         def Disconnect(self):
-             if self.connect:
-                self.cursor.close()
-          
-         def implement(self):
-            
-            Update="""INSERT INTO INSTRUCTOR VALUES(?,?,?,?,?,?,?)"""
-            Values=(self.id,self.first_name,self.last_name,self.title,self.hire,self.department,self.Email)
-            self.cursor.execute(Update,Values)
-            self.connect.commit()
-         def search_Course(self,crn):
-              self.connect=sqlite3.connect("Database/tables.db")
-              self.cursor=self.connect.cursor()
-              Fetch="""SELECT * FROM COURSE WHERE CRN =? """
-              course_crn=crn
-              self.cursor.execute(Fetch,(course_crn,))
-              result= self.cursor.fetchall()
-              if result:
-               for row in result:
-                 CRN=row[0]
-                 Course_name=row[1]
-                 Course_day=row[2]
-                 Course_time=row[3]
-                 Instructor_name=row[4]
-               return(f"CRN: {CRN}\n Course day : {Course_day}\n Course Name: {Course_name}\n Course time: {Course_time}\n Teacher: {Instructor_name}")
-              else:
-                return("Course doesn't exist ")
-            
-         def Print_Class_List(self,crn, instructorName):
+         def print_T_schedule(self):
             self.connect=sqlite3.connect("Database/tables.db")
             self.cursor=self.connect.cursor()
-            Fetch=""" SELECT ROSTER FROM COURSE WHERE INSTRUCTOR_NAME=? AND CRN=? """
-            Value=(instructorName,crn)
-            self.cursor.execute(Fetch,(Value),)
-            result=self.cursor.fetchone()
-            if result:
-                print(result[0])
-            else:
-                print(f"{instructorName} is not teaching this course ")
-            
+            Fetch="""SELECT * FROM COURSE WHERE T_NAME=?"""
+            self.cursor.execute(Fetch,(self.first_name,))
+            Schedule=self.cursor.fetchall()
+            new_array=[]
+            for element in Schedule:
+                CRN=element[0]
+                C_NAME=element[1]
+                S_DAY=element[2]
+                E_DAY=element[3]
+                S_TIME=element[4]
+                E_TIME=element[5]
+                new_array.append(f"{CRN}|{C_NAME}|{S_DAY}|{E_DAY}|{S_TIME}|{E_TIME}")
+            String_array='\n'.join(new_array)
             self.cursor.close()
+            return String_array         
+
+         def print_S_list(self, crn):
+            self.connect=sqlite3.connect("Database/tables.db")
+            self.cursor=self.connect.cursor()
+            Fetch=""" SELECT ST_NAME FROM SCHEDULE WHERE T_NAME=? """
+            self.cursor.execute(Fetch,(self.first_name,))
+            result=self.cursor.fetchone()
+            for element in result:
+                print(element)
+        
+        
