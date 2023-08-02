@@ -251,12 +251,11 @@ class StudenthomeFrame(tkinter.Frame):
 
         self.label = tkinter.Label(self, text=f"User: {self.master.user_name}", font=('Times',12), bg="white")
         self.label.place(x=20, y=20)
+        self.label = tkinter.Label(self, text=f"ID: {self.master.user_id}", font=('Times',12), bg="white")
+        self.label.place(x=20, y=50)
 
         self.logout_button = tkinter.Button(self, text="Logout", font=('Times',12),  bg="red", fg="white", bd=0, command=self.logout)
         self.logout_button.place(x=285, y=20)
-
-        self.label = tkinter.Label(self, text=f"ID: {self.master.user_id}", font=('Times',12), bg="white")
-        self.label.place(x=20, y=50)
        
         self.label = tkinter.Label(self, text="Student Home Page", font=('Times',12), bg="white")
         self.label.place(x=120, y=70)
@@ -292,6 +291,11 @@ class InstructorhomeFrame(tkinter.Frame):
         
         self.label = tkinter.Label(self, text="Instructor Home Page", font=('Times',12), bg="white")
         self.label.place(x=20, y=30)
+
+        self.label = tkinter.Label(self, text=f"User: {self.master.user_name}", font=('Times',12), bg="white")
+        self.label.place(x=20, y=20)
+        self.label = tkinter.Label(self, text=f"ID: {self.master.user_id}", font=('Times',12), bg="white")
+        self.label.place(x=20, y=50)
 
         self.logout_button = tkinter.Button(self, text="Logout", font=('Times',12),  bg="red", fg="white", bd=0, command=self.logout)
         self.logout_button.place(x=285, y=30)
@@ -348,38 +352,43 @@ class InstructorPrintFrame(tkinter.Frame):
 class AdminFrame (tkinter.Frame):
      def __init__(self, master):
         super().__init__(master, width = 350, height = 500, bg="white")
-        self.label = tkinter.Label(self, text="Admin Main Menu", font=('Times',14), bg="white")
-        self.label.place(x=20, y=40)
+        self.label = tkinter.Label(self, text="Admin Main Menu", font=('Times',16), bg="white")
+        self.label.place(x=20, y=80)
+
+        self.label = tkinter.Label(self, text=f"User: {self.master.user_name}", font=('Times',10), bg="white")
+        self.label.place(x=20, y=10)
+        self.label = tkinter.Label(self, text=f"ID: {self.master.user_id}", font=('Times',10), bg="white")
+        self.label.place(x=20, y=30)
 
         self.logout_button = tkinter.Button(self, text="Logout", font=('Times',12),  bg="red", fg="white", bd=0, command=self.logout)
         self.logout_button.place(x=285, y=30)
         
-        self.Search_button = tkinter.Button(self, text="Search Courses", bg="black", fg="white", width=12, font=('Times',12), bd=0, command=self.SearchClass)
-        self.Search_button.place(x=20, y=80)
+        self.Search_button = tkinter.Button(self, text="Search Courses", bg="black", fg="white", width=22, font=('Times',12), bd=0, command=self.SearchClass)
+        self.Search_button.place(x=20, y=120)
         
-        self.Add_button = tkinter.Button(self, text="Add Courses", bg="black", fg="white", width=10, font=('Times',12), bd=0, command=self.AddCoursetosystem)
-        self.Add_button.place(x=20, y=120)
+        self.Add_button = tkinter.Button(self, text="Add Courses", bg="black", fg="white", width=22, font=('Times',12), bd=0, command=self.AddCoursetosystem)
+        self.Add_button.place(x=20, y=160)
         
-        self.Drop_button = tkinter.Button(self, text="Drop Courses", bg="black", fg="white", width=10, font=('Times',12), bd=0, command=self.logout)
-        self.Drop_button.place(x=20, y=160)
+        self.Drop_button = tkinter.Button(self, text="Drop Courses", bg="black", fg="white", width=22, font=('Times',12), bd=0, command=self.logout)
+        self.Drop_button.place(x=20, y=200)
 
-        self.Print_button = tkinter.Button(self, text="Print Schedule", bg="black", fg="white", width=13, font=('Times',12), bd=0, command=self.logout)
-        self.Print_button.place(x=20, y=200)
+        self.Print_button = tkinter.Button(self, text="Print Schedule", bg="black", fg="white", width=22, font=('Times',12), bd=0, command=self.logout)
+        self.Print_button.place(x=20, y=240)
 
-        self.Search_button = tkinter.Button(self, text="Search Schedule", bg="black", fg="white", width=13, font=('Times',12), bd=0, command=self.logout)
-        self.Search_button.place(x=20, y=240)
+        self.Search_button = tkinter.Button(self, text="Search Schedule", bg="black", fg="white", width=22, font=('Times',12), bd=0, command=self.logout)
+        self.Search_button.place(x=20, y=280)
 
-        self.Add_button = tkinter.Button(self, text="Add Users ", bg="black", fg="white", width=10, font=('Times',12), bd=0, command=self.logout)
-        self.Add_button.place(x=20, y=280)
+        self.Add_button = tkinter.Button(self, text="Add Users ", bg="black", fg="white", width=22, font=('Times',12), bd=0, command=self.logout)
+        self.Add_button.place(x=20, y=320)
 
-        self.Remove_button = tkinter.Button(self, text="Remove Users ", bg="black", fg="white", width=10, font=('Times',12), bd=0, command=self.logout)
-        self.Remove_button.place(x=20, y=320)
+        self.Remove_button = tkinter.Button(self, text="Remove Users ", bg="black", fg="white", width=22, font=('Times',12), bd=0, command=self.logout)
+        self.Remove_button.place(x=20, y=360)
 
         self.add_button = tkinter.Button(self, text="Add Students from courses ", bg="black", fg="white", width=22, font=('Times',12), bd=0, command=self.logout)
-        self.add_button.place(x=20, y=360)
+        self.add_button.place(x=20, y=400)
 
         self.remove_button = tkinter.Button(self, text="Remove Students from courses ", bg="black", fg="white", width=22, font=('Times',12), bd=0, command=self.logout)
-        self.remove_button.place(x=20, y=400)
+        self.remove_button.place(x=20, y=440)
         
      def view_profile(self):
         self.master.show_profile_frame()
