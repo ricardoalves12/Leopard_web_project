@@ -8,6 +8,8 @@ import sqlite3
 import student
 import Teacher
 import Admin
+import user
+from user import *
 
 global UserId
 
@@ -16,6 +18,7 @@ class MainPage(tkinter.Tk):
         super().__init__()
 
         self.user_id = None
+        self.user = User()
         self.user_name = None
         self.title("Leopard Web") 
         #setting page geometry to the size of the user's screen
@@ -36,9 +39,7 @@ class MainPage(tkinter.Tk):
         self.student_remove_course_frame = StudentDropCourseFrame(self)
         self.ShowLoginFrame()
 
-    def updateUserId_name(self, new_id, new_name):
-        self.user_id = new_id
-        self.user_name = new_name
+    def updateLoginpage(self):
         self.login_frame = LoginFrame(self)
         self.student_frame = StudenthomeFrame(self)
         self.Instructor_frame = InstructorhomeFrame(self)
@@ -227,18 +228,19 @@ class LoginFrame (tkinter.Frame):
         self.password_entry.delete(0, END)
         DbConnect = sqlite3.connect("Database/tables.db")
         db= DbConnect.cursor()         
-        db.execute("SELECT 1 FROM AUTHENTIFY  WHERE USER_NAME = ? and PASSWORD = ? ", (username, password))
-        result = db.fetchone()
-        if result:
+        if user.User.CheckLoginCredentials(self,username,password):
             for row in db.execute("SELECT * FROM AUTHENTIFY  WHERE USER_NAME = ? and PASSWORD = ? ", (username, password)):
-                if row[1] == 'STUDENT':                                    
-                    self.master.updateUserId_name(f"{row[0]}", f"{row[2]}")
+                if row[1] == 'STUDENT': 
+                    self.master.user.setUserInfo(str(row[2]), str(row[3]), int(row[0]))
+                    self.master.updateLoginpage()
                     self.master.show_student_Frame()  
                 elif row[1] == 'ADMIN':
-                    self.master.updateUserId_name(f"{row[0]}", f"{row[2]}")
+                    self.master.user.setUserInfo(str(row[2]), str(row[3]), int(row[0]))
+                    self.master.updateLoginpage()
                     self.master.show_Admin_Frame()
                 elif row[1] == 'INSTRUCTOR':
-                    self.master.updateUserId_name(f"{row[0]}", f"{row[2]}")
+                    self.master.user.setUserInfo(str(row[2]), str(row[3]), int(row[0]))
+                    self.master.updateLoginpage()
                     self.master.show_Instructor_Frame()
                 else:
                     messagebox.showerror("User type failed", "Invalid User type.")
@@ -249,14 +251,11 @@ class StudenthomeFrame(tkinter.Frame):
     def __init__(self, master):
         super().__init__(master, width = 350, height = 500, bg="white")
 
-        self.label = tkinter.Label(self, text=f"User: {self.master.user_name}", font=('Times',12), bg="white")
+        self.label = tkinter.Label(self, text=f"{self.master.user.printInfo()}", font=('Times',12), bg="white")
         self.label.place(x=20, y=20)
 
         self.logout_button = tkinter.Button(self, text="Logout", font=('Times',12),  bg="red", fg="white", bd=0, command=self.logout)
         self.logout_button.place(x=285, y=20)
-
-        self.label = tkinter.Label(self, text=f"ID: {self.master.user_id}", font=('Times',12), bg="white")
-        self.label.place(x=20, y=50)
        
         self.label = tkinter.Label(self, text="Student Home Page", font=('Times',12), bg="white")
         self.label.place(x=120, y=70)
@@ -290,6 +289,9 @@ class InstructorhomeFrame(tkinter.Frame):
     def __init__(self, master):
         super().__init__(master, width = 350, height = 500, bg="white")
         
+        self.label = tkinter.Label(self, text=f"{self.master.user.printInfo()}", font=('Times',12), bg="white")
+        self.label.place(x=20, y=20)
+
         self.label = tkinter.Label(self, text="Instructor Home Page", font=('Times',12), bg="white")
         self.label.place(x=20, y=30)
 
@@ -348,6 +350,10 @@ class InstructorPrintFrame(tkinter.Frame):
 class AdminFrame (tkinter.Frame):
      def __init__(self, master):
         super().__init__(master, width = 350, height = 500, bg="white")
+
+        self.label = tkinter.Label(self, text=f"{self.master.user.printInfo()}", font=('Times',12), bg="white")
+        self.label.place(x=20, y=20)
+
         self.label = tkinter.Label(self, text="Admin Main Menu", font=('Times',14), bg="white")
         self.label.place(x=20, y=40)
 
@@ -357,10 +363,10 @@ class AdminFrame (tkinter.Frame):
         self.Search_button = tkinter.Button(self, text="Search Courses", bg="black", fg="white", width=12, font=('Times',12), bd=0, command=self.SearchClass)
         self.Search_button.place(x=20, y=80)
         
-        self.Add_button = tkinter.Button(self, text="Add Courses", bg="black", fg="white", width=10, font=('Times',12), bd=0, command=self.AddCoursetosystem)
+        self.Add_button = tkinter.Button(self, text="Add Courses To System", bg="black", fg="white", width=10, font=('Times',12), bd=0, command=self.AddCoursetosystem)
         self.Add_button.place(x=20, y=120)
         
-        self.Drop_button = tkinter.Button(self, text="Drop Courses", bg="black", fg="white", width=10, font=('Times',12), bd=0, command=self.logout)
+        self.Drop_button = tkinter.Button(self, text="Remove Courses From System", bg="black", fg="white", width=10, font=('Times',12), bd=0, command=self.logout)
         self.Drop_button.place(x=20, y=160)
 
         self.Print_button = tkinter.Button(self, text="Print Schedule", bg="black", fg="white", width=13, font=('Times',12), bd=0, command=self.logout)
@@ -370,15 +376,15 @@ class AdminFrame (tkinter.Frame):
         self.Search_button.place(x=20, y=240)
 
         self.Add_button = tkinter.Button(self, text="Add Users ", bg="black", fg="white", width=10, font=('Times',12), bd=0, command=self.logout)
-        self.Add_button.place(x=20, y=280)
+        self.Add_button.place(x=20, y=200)
 
         self.Remove_button = tkinter.Button(self, text="Remove Users ", bg="black", fg="white", width=10, font=('Times',12), bd=0, command=self.logout)
         self.Remove_button.place(x=20, y=320)
 
-        self.add_button = tkinter.Button(self, text="Add Students from courses ", bg="black", fg="white", width=22, font=('Times',12), bd=0, command=self.logout)
+        self.add_button = tkinter.Button(self, text="Link Student To Courses", bg="black", fg="white", width=22, font=('Times',12), bd=0, command=self.logout)
         self.add_button.place(x=20, y=360)
 
-        self.remove_button = tkinter.Button(self, text="Remove Students from courses ", bg="black", fg="white", width=22, font=('Times',12), bd=0, command=self.logout)
+        self.remove_button = tkinter.Button(self, text="Unlinking Student from courses", bg="black", fg="white", width=22, font=('Times',12), bd=0, command=self.logout)
         self.remove_button.place(x=20, y=400)
         
      def view_profile(self):
@@ -416,7 +422,7 @@ class StudentSearchClassFrame(tkinter.Frame):
         self.CRN_entry.delete(0, END)
        
         # call the Student class to print data base
-        tkinter.messagebox.showinfo("Course info",student.Student.search_Course(self,CRN))
+        tkinter.messagebox.showinfo("Course info",user.User.search_Course(self,CRN))
         
     def Back(self):
         self.master.show_student_Frame()
@@ -500,7 +506,7 @@ class InstructorSearchClassFrame(tkinter.Frame):
         self.CRN_entry.delete(0, END)
        
         # call the Teacher class to print data base
-        tkinter.messagebox.showinfo("Course info",Teacher.Teacher.search_Course(self, CRN))
+        tkinter.messagebox.showinfo("Course info",user.User.search_Course(self,CRN))
         
     def Back(self):
         self.master.show_Instructor_Frame()
@@ -528,7 +534,7 @@ class AdminSearchClassFrame(tkinter.Frame):
         self.CRN_entry.delete(0, END)
        
         # call the Teacher class to print data base
-        tkinter.messagebox.showinfo("Course info",Admin.Admin.search_Course(self, CRN))
+        tkinter.messagebox.showinfo("Course info",user.User.search_Course(self,CRN))
         
     def Back(self):
         self.master.show_Admin_Frame()
