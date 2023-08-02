@@ -47,8 +47,8 @@ if test1s:
       CRN3=478
       CRN4=35
 
-      Test_Student.Remove(CRN)
-#       
+      
+      Test_Student.display_schedule()  
 
 #       Test_Student.Append(CRN2)
 #       Test_Student.update(CRN2,Test_Student.first_name)

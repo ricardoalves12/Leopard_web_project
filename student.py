@@ -57,25 +57,15 @@ class Student(User):
          self.cursor.execute(Remove,(Val))
          self.connect.commit()
        
-
-
-
-        
-
-       
        def display_schedule(self):
-         for row, element in self.schedule.items():
-            print(row,element)
-
-       def UPDATE(self):
-         
-         Update_array=[]
-         for key,element in self.schedule.items():
-            Update_array.append(element)
-            Upd='|'.join(Update_array)
-            Up="""UPDATE STUDENT SET SCHEDULE=? WHERE NAME=? """
-            self.cursor.execute(Up,(Upd,self.first_name),)
-            self.connect.commit()
-            print(Upd)
-
-            
+        Fetch="""SELECT * FROM SCHEDULE WHERE ID=?"""
+        self.cursor.execute(Fetch,(self.ID,))
+        Schedule=self.cursor.fetchall()
+        for element in Schedule:
+          CRN=element[2]
+          C_NAME=element[3]
+          S_DAY=element[4]
+          E_DAY=element[5]
+          S_TIME=element[6]
+          E_TIME=element[7]  
+          print(f"{CRN}|{C_NAME}|{S_DAY}|{E_DAY}|{S_TIME}|{E_TIME}")
