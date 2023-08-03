@@ -36,6 +36,7 @@ class MainPage(tkinter.Tk):
         self.admin_search_class_frame = AdminSearchClassFrame(self) 
         self.student_add_course_frame = StudentAddCourseFrame(self)
         self.admin_add_class_frame = AdminAddClassFrame(self)
+        self.admin_remove_class_frame = AdminRemoveClassFrame(self)
         self.student_remove_course_frame = StudentDropCourseFrame(self)
         self.ShowLoginFrame()
 
@@ -50,6 +51,7 @@ class MainPage(tkinter.Tk):
         self.admin_search_class_frame = AdminSearchClassFrame(self) 
         self.student_add_course_frame = StudentAddCourseFrame(self)
         self.admin_add_class_frame = AdminAddClassFrame(self)
+        self.admin_remove_class_frame = AdminRemoveClassFrame(self)
         self.student_remove_course_frame = StudentDropCourseFrame(self)
         
 
@@ -118,6 +120,7 @@ class MainPage(tkinter.Tk):
         self.student_add_course_frame.place_forget()
         self.student_search_class_frame.place_forget()
         self.admin_add_class_frame.place_forget()
+        self.admin_remove_class_frame.place_forget()
         self.student_remove_course_frame.place_forget()
         
     def show_student_search_Class_Frame(self):
@@ -132,6 +135,7 @@ class MainPage(tkinter.Tk):
         self.student_add_course_frame.place_forget()
         self.admin_search_class_frame.place_forget()
         self.admin_add_class_frame.place_forget()
+        self.admin_remove_class_frame.place_forget()
         self.student_remove_course_frame.place_forget()
 
     def show_instructor_search_Class_Frame(self):
@@ -146,6 +150,7 @@ class MainPage(tkinter.Tk):
         self.student_add_course_frame.place_forget()
         self.admin_search_class_frame.place_forget()
         self.admin_add_class_frame.place_forget()
+        self.admin_remove_class_frame.place_forget()
         self.student_remove_course_frame.place_forget()
 
     def show_admin_search_Class_Frame(self):
@@ -160,6 +165,7 @@ class MainPage(tkinter.Tk):
         self.student_add_course_frame.place_forget()
         self.admin_search_class_frame.place(x=((width_screen/2) -200),y=((height_screen/2) -380))
         self.admin_add_class_frame.place_forget()
+        self.admin_remove_class_frame.place_forget()
         self.student_remove_course_frame.place_forget()
 
     def show_student_add_Course_Frame(self):
@@ -174,6 +180,7 @@ class MainPage(tkinter.Tk):
         self.student_add_course_frame.place(x=((width_screen/2) -200),y=((height_screen/2) -380))
         self.admin_search_class_frame.place_forget()
         self.admin_add_class_frame.place_forget()
+        self.admin_remove_class_frame.place_forget()
         self.student_remove_course_frame.place_forget()
 
     def show_admin_add_Class_Frame(self):
@@ -186,6 +193,22 @@ class MainPage(tkinter.Tk):
         self.instructor_search_class_frame.place_forget()
         self.Admin_frame.place_forget()
         self.admin_add_class_frame.place(x=((width_screen/2) -200),y=((height_screen/2) -380))
+        self.admin_remove_class_frame.place_forget()
+        self.student_add_course_frame.place_forget()
+        self.student_remove_course_frame.place_forget()
+
+    
+    def show_admin_remove_Class_Frame(self):
+        width_screen= self.winfo_screenwidth()
+        height_screen= self.winfo_screenheight()
+        self.login_frame.place_forget()
+        self.student_frame.place_forget()
+        self.student_search_class_frame.place_forget()
+        self.Instructor_frame.place_forget()
+        self.instructor_search_class_frame.place_forget()
+        self.Admin_frame.place_forget()
+        self.admin_remove_class_frame.place(x=((width_screen/2) -200),y=((height_screen/2) -380))
+        self.admin_add_class_frame.place_forget()
         self.student_add_course_frame.place_forget()
         self.student_remove_course_frame.place_forget()
     
@@ -199,6 +222,7 @@ class MainPage(tkinter.Tk):
         self.instructor_search_class_frame.place_forget()
         self.Admin_frame.place_forget()
         self.admin_add_class_frame.place_forget()
+        self.admin_remove_class_frame.place_forget()
         self.student_add_course_frame.place_forget()
         self.student_remove_course_frame.place(x=((width_screen/2) -200),y=((height_screen/2) -380))
 
@@ -293,16 +317,16 @@ class InstructorhomeFrame(tkinter.Frame):
         self.label.place(x=20, y=20)
 
         self.label = tkinter.Label(self, text="Instructor Home Page", font=('Times',12), bg="white")
-        self.label.place(x=20, y=30)
+        self.label.place(x=120, y=70)
 
         self.logout_button = tkinter.Button(self, text="Logout", font=('Times',12),  bg="red", fg="white", bd=0, command=self.logout)
         self.logout_button.place(x=285, y=30)
 
         self.PrintSchedule_button = tkinter.Button(self, text="Print Schedule", font=('Times',12),  bg="black", fg="white", bd=0)
-        self.PrintSchedule_button.place(x=25, y=100)
+        self.PrintSchedule_button.place(x=25, y=120)
 
         self.PrintClassList_button = tkinter.Button(self, text="Print Class List", font=('Times',12),  bg="black", fg="white", bd=0, command=self.PrintClassList)
-        self.PrintClassList_button.place(x=25, y=150)
+        self.PrintClassList_button.place(x=25, y=160)
 
         self.SearchCourses_button = tkinter.Button(self, text="Search Courses", font=('Times',12),  bg="black", fg="white", bd=0, command=self.SearchClass)
         self.SearchCourses_button.place(x=25, y=200)
@@ -355,37 +379,31 @@ class AdminFrame (tkinter.Frame):
         self.label.place(x=20, y=20)
 
         self.label = tkinter.Label(self, text="Admin Main Menu", font=('Times',14), bg="white")
-        self.label.place(x=20, y=40)
+        self.label.place(x=120, y=70)
 
         self.logout_button = tkinter.Button(self, text="Logout", font=('Times',12),  bg="red", fg="white", bd=0, command=self.logout)
         self.logout_button.place(x=285, y=30)
         
-        self.Search_button = tkinter.Button(self, text="Search Courses", bg="black", fg="white", width=12, font=('Times',12), bd=0, command=self.SearchClass)
-        self.Search_button.place(x=20, y=80)
+        self.Search_button = tkinter.Button(self, text="Search Courses", bg="black", fg="white", width=22, font=('Times',12), bd=0, command=self.SearchClass)
+        self.Search_button.place(x=20, y=120)
         
-        self.Add_button = tkinter.Button(self, text="Add Courses To System", bg="black", fg="white", width=10, font=('Times',12), bd=0, command=self.AddCoursetosystem)
-        self.Add_button.place(x=20, y=120)
+        self.Add_button = tkinter.Button(self, text="Add Courses To System", bg="black", fg="white", width=22, font=('Times',12), bd=0, command=self.AddCoursetosystem)
+        self.Add_button.place(x=20, y=160)
         
-        self.Drop_button = tkinter.Button(self, text="Remove Courses From System", bg="black", fg="white", width=10, font=('Times',12), bd=0, command=self.logout)
-        self.Drop_button.place(x=20, y=160)
+        self.Drop_button = tkinter.Button(self, text="Remove Courses From System", bg="black", fg="white", width=22, font=('Times',12), bd=0, command=self.RemoveCoursefromsystem)
+        self.Drop_button.place(x=20, y=200)
 
-        self.Print_button = tkinter.Button(self, text="Print Schedule", bg="black", fg="white", width=13, font=('Times',12), bd=0, command=self.logout)
-        self.Print_button.place(x=20, y=200)
+        self.Add_button = tkinter.Button(self, text="Add Users ", bg="black", fg="white", width=22, font=('Times',12), bd=0, command=self.logout) # 
+        self.Add_button.place(x=20, y=240)
 
-        self.Search_button = tkinter.Button(self, text="Search Schedule", bg="black", fg="white", width=13, font=('Times',12), bd=0, command=self.logout)
-        self.Search_button.place(x=20, y=240)
+        self.Remove_button = tkinter.Button(self, text="Remove Users ", bg="black", fg="white", width=22, font=('Times',12), bd=0, command=self.logout) #
+        self.Remove_button.place(x=20, y=280)
 
-        self.Add_button = tkinter.Button(self, text="Add Users ", bg="black", fg="white", width=10, font=('Times',12), bd=0, command=self.logout)
-        self.Add_button.place(x=20, y=200)
+        self.add_button = tkinter.Button(self, text="Link Student To Courses", bg="black", fg="white", width=22, font=('Times',12), bd=0, command=self.logout) #ask for student id
+        self.add_button.place(x=20, y=320)
 
-        self.Remove_button = tkinter.Button(self, text="Remove Users ", bg="black", fg="white", width=10, font=('Times',12), bd=0, command=self.logout)
-        self.Remove_button.place(x=20, y=320)
-
-        self.add_button = tkinter.Button(self, text="Link Student To Courses", bg="black", fg="white", width=22, font=('Times',12), bd=0, command=self.logout)
-        self.add_button.place(x=20, y=360)
-
-        self.remove_button = tkinter.Button(self, text="Unlinking Student from courses", bg="black", fg="white", width=22, font=('Times',12), bd=0, command=self.logout)
-        self.remove_button.place(x=20, y=400)
+        self.remove_button = tkinter.Button(self, text="Unlinking Student from courses", bg="black", fg="white", width=22, font=('Times',12), bd=0, command=self.logout)  #ask for student id
+        self.remove_button.place(x=20, y=360)
         
      def view_profile(self):
         self.master.show_profile_frame()
@@ -398,6 +416,9 @@ class AdminFrame (tkinter.Frame):
 
      def AddCoursetosystem(self):
          self.master.show_admin_add_Class_Frame()
+
+     def RemoveCoursefromsystem(self):
+         self.master.show_admin_remove_Class_Frame()
 
 class StudentSearchClassFrame(tkinter.Frame):
     def __init__(self, master):
@@ -539,6 +560,36 @@ class AdminSearchClassFrame(tkinter.Frame):
     def Back(self):
         self.master.show_Admin_Frame()
 
+
+
+class AdminRemoveClassFrame(tkinter.Frame):
+    def __init__(self, master):
+        super().__init__(master, width = 350, height = 500, bg="white")
+
+         
+        self.label = tkinter.Label(self, text="Remove Course Page", font=('Times',12), bg="white")
+        self.label.place(x=20, y=30)
+
+        self.logout_button = tkinter.Button(self, text="Back", font=('Times',12),  bg="red", fg="white", bd=0, command=self.Back)
+        self.logout_button.place(x=285, y=30)
+
+        self.CRN_label = tkinter.Label(self, text="Enter CRN:", font=('Times',12), bg="white")
+        self.CRN_label.place(x=20, y=70)
+        self.CRN_entry = tkinter.Entry(self, highlightbackground='black', highlightthickness=1,bd=0,width=34,font=('Times',14))
+        self.CRN_entry.place(x=20, y=110)
+
+        self.remove_button = tkinter.Button(self, text="Remove Course", font=('Times',12),  bg="black", fg="white", bd=0, command=self.RemoveCourse)
+        self.remove_button.place(x=20, y=470)
+
+    def RemoveCourse(self):
+      CRN = self.CRN_entry.get()
+      self.CRN_entry.delete(0, END)
+       
+        # call the Teacher class to print data base
+      Admin.Admin.remove_Course(self, CRN)
+        
+    def Back(self):
+        self.master.show_Admin_Frame()
 
 class AdminAddClassFrame(tkinter.Frame):
     def __init__(self, master):
