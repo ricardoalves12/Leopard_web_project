@@ -106,8 +106,8 @@ class Admin(User):
        self.cursor.execute(Value1,(ID,))
        S_INFO=self.cursor.fetchall()
        for info in S_INFO:
-         S_ID=element[0]
-         S_NAME=element[1]
+         S_ID=info[0]
+         S_NAME=info[1]
        Valu1="""INSERT INTO SCHEDULE(ID,ST_NAME,CRN,C_NAME,S_DAY,E_DAY,S_TIME,E_TIME,T_NAME) VALUES(?,?,?,?,?,?,?,?,?)"""
        Val1=(S_ID,S_NAME,CRN,C_NAME,S_DAY,E_DAY,S_TIME,E_TIME,T_NAME)  
        self.cursor.execute(Valu1,(Val1))
