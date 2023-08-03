@@ -90,6 +90,28 @@ class Admin(User):
       self.cursor.execute(Value,(CRN,ID,))
       self.connect.commit()
     
+    def Link_S(self,CRN,ID):
+       Value="""SELECT * FROM COURSE WHERE CRN=?"""
+       self.cursor.execute(Value,(CRN,))
+       C_info=self.cursor.fetchall()
+       for element in C_info:
+        CRN=element[0]
+        C_NAME=element[1]
+        S_DAY=element[2]
+        E_DAY=element[3]
+        S_TIME=element[4]
+        E_TIME=element[5]
+        T_NAME=element[6]
+       Value1="""SELECT * FROM STUDENT WHERE ID=?"""
+       self.cursor.execute(Value1,(ID,))
+       S_INFO=self.cursor.fetchall()
+       for info in S_INFO:
+         S_ID=element[0]
+         S_NAME=element[1]
+       Valu1="""INSERT INTO SCHEDULE(ID,ST_NAME,CRN,C_NAME,S_DAY,E_DAY,S_TIME,E_TIME,T_NAME) VALUES(?,?,?,?,?,?,?,?,?)"""
+       Val1=(S_ID,S_NAME,CRN,C_NAME,S_DAY,E_DAY,S_TIME,E_TIME,T_NAME)  
+       self.cursor.execute(Valu1,(Val1))
+       self.connect.commit()
 
 
          

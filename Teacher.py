@@ -20,13 +20,22 @@ class Teacher(User):
              if self.connect:
                 self.cursor.close()
           
-         def implement(self):
-            
-            Update="""INSERT INTO INSTRUCTOR VALUES(?,?,?,?,?,?,?)"""
-            Values=(self.id,self.first_name,self.last_name,self.title,self.hire,self.department,self.Email)
-            self.cursor.execute(Update,Values)
-            self.connect.commit()
-        
+         def print_T_schedule(self):
+            Fetch="""SELECT * FROM COURSE WHERE T_NAME=?"""
+            self.cursor.execute(Fetch,(self.first_name,))
+            Schedule=self.cursor.fetchall()
+            new_array=[]
+            for element in Schedule:
+                CRN=element[0]
+                C_NAME=element[1]
+                S_DAY=element[2]
+                E_DAY=element[3]
+                S_TIME=element[4]
+                E_TIME=element[5]
+                new_array.append(f"{CRN}|{C_NAME}|{S_DAY}|{E_DAY}|{S_TIME}|{E_TIME}")
+            String_array='\n'.join(new_array)
+            return String_array
+           
         
          
          def print_S_list(self):
