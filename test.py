@@ -36,19 +36,19 @@ from Admin import Admin
 
 
 
-Test_Student=Student("Thomas","Edison",10004,"BSEE",1879,"STUDENT")
-Test_Student.Connect()
-Test_Student.cursor.execute("SELECT 1 FROM STUDENT WHERE ID=?",(Test_Student.ID,))
-test1s=Test_Student.cursor.fetchone()
-if test1s:
-      print("Test 1 Add and Remove\t  ")
-      CRN=363
-      CRN2=120
-      CRN3=478
-      CRN4=35
+#Test_Student=Student("Thomas","Edison",10004,"BSEE",1879,"STUDENT")
+#Test_Student.Connect()
+#Test_Student.cursor.execute("SELECT 1 FROM STUDENT WHERE ID=?",(Test_Student.ID,))
+#test1s=Test_Student.cursor.fetchone()
+#if test1s:
+      #print("Test 1 Add and Remove\t  ")
+      #CRN=363
+      #CRN2=120
+      #CRN3=478
+      #CRN4=35
 
-      Test_Student.Add_Course(CRN)
-      Test_Student.display_schedule()  
+      #Test_Student.Add_Course(CRN)
+      #Test_Student.display_schedule()  
 
 #       Test_Student.Append(CRN2)
 #       Test_Student.update(CRN2,Test_Student.first_name)
@@ -73,13 +73,13 @@ if test1s:
 # else:
 #      print('Add and remove failed\t ')
 
-Test_Teacher=Teacher("Galileo","Galilei",20003,"BSAS","INSTUCTOR","Full Prof",1600)
-Test_Teacher.Connect()
-Test_Teacher.cursor.execute("SELECT 1 FROM INSTRUCTOR WHERE ID=?",(Test_Teacher.ID,))  
-test1t=Test_Teacher.cursor.fetchone()
-if test1t:
-  print("Test 1 print roster\t ")
-  CRN=363
+#Test_Teacher=Teacher("Galileo","Galilei",20003,"BSAS","INSTUCTOR","Full Prof",1600)
+#Test_Teacher.Connect()
+#Test_Teacher.cursor.execute("SELECT 1 FROM INSTRUCTOR WHERE ID=?",(Test_Teacher.ID,))  
+#test1t=Test_Teacher.cursor.fetchone()
+#if test1t:
+#print("Test 1 print roster\t ")
+#CRN=363
 #  Test_Teacher.print(CRN)
 # else:
 #    print("print roster doesn't work\t")
@@ -88,9 +88,9 @@ Test_Admin.Connect()
 Test_Admin.cursor.execute("SELECT 1 FROM ADMIN WHERE ID=?",(Test_Admin.ID,))  
 test1a=Test_Admin.cursor.fetchone()
 
-# if test1a:
-#     CRN=random.randint(100,500)
-#     test_case=Test_Admin.Add(CRN,"CALCULUS","M","W",11,12,"Zang")
+if test1a:
+      
+      Test_Admin.Add_Teacher("Zang","Fou","Full Prof",1897,"BMAS")
 #     CRN2=random.randint(100,500)
 #     if CRN==CRN2:
 #       CRN2=random.randint(100,500)

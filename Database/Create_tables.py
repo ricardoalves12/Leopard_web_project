@@ -40,16 +40,10 @@ cursor = database.cursor()
     T_NAME TEXT NOT NULL"""
     #);"""
 #cursor.execute(sql_command)
-sql_command="""CREATE TABLE COURSE (
-    CRN INTERGER NOT NULL PRIMARY KEY,
-    C_NAME TEXT NOT NULL,
-    S_DAY TEXT NOT NULL,
-    E_DAY TEXT NOT NULL,
-    S_TIME INTERGER NOT NULL,
-    E_TIME INTERGER NOT NULL,
-    T_NAME TEXT NOT NULL);"""
+sql_commande="""DELETE FROM SCHEDULE WHERE ID=10004"""
 
 
-cursor.execute(sql_command)
+cursor.execute(sql_commande)
+
 database.commit() 
 database.close()
