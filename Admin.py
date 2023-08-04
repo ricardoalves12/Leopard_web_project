@@ -4,15 +4,9 @@ from user import User
 
 
 class Admin(User):
-    def __init__(self,first_name,last_name,id,status,title,office):
-       super().__init__(first_name,last_name,id,status)
+    def __init__(self,first_name,last_name,ID):
+       super().__init__(self,first_name,last_name,ID)
        
-       self.Email= self.first_name + self.last_name[0] + " @wit.edu"
-       self.title= title
-       self.office=office
-       self.id=id
-       self.cursor=None
-       self.connect=None
     
     def Connect(self):
              self.connect=sqlite3.connect("Leopard_web_project/Database/tables.db")
@@ -22,6 +16,18 @@ class Admin(User):
     def Disconnect(self):
           if self.connect:
             self.cursor.close()
+
+
+
+    def Add_Course(self,id,C_Name,S_day,E_day,S_time,E_time,T_name):
+      self.connect=sqlite3.connect("Database/tables.db")
+      self.cursor=self.connect.cursor()
+      Value ="""INSERT INTO COURSE(CRN,C_NAME,S_DAY,E_DAY,S_TIME,E_TIME,T_NAME) VALUES(?,?,?,?,?,?,?)"""
+      Values=(id,C_Name,S_day,E_day,S_time,E_time,T_name)
+      self.cursor.execute(Value,Values)
+      self.connect.commit()
+      self.connect.close()
+      return True
     
     def Add(self,id,C_Name,C_day,C_time,Instructor,):
       Value ="""INSERT INTO COURSE(CRN,COURSE_NAME,COURSE_DAY,COURSE_TIME,INSTRUCTOR_NAME) VALUES(?,?,?,?,?)"""

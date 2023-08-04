@@ -343,9 +343,12 @@ class InstructorPrintFrame(tkinter.Frame):
     def PrintClassList(self):
         CRN = self.CRN_entry.get()
         self.CRN_entry.delete(0, END)
-       
-        # call the Teacher class to print data base
-        Teacher.Teacher.Print_Class_List(self, CRN,self.master.user_name)
+        self.teacher = Teacher(self.master.user.first_name, self.master.user.last_name, self.master.user.ID)
+
+        if self.teacher.print_S_list(CRN) != False:
+            messagebox.showinfo("Class List",self.teacher.print_S_list(CRN))
+        else:
+            messagebox.showerror("Class List",f"Teacher not teaching course {CRN}, course does not exist, or no student is taking the course.")
         
     def Back(self):
         self.master.show_Instructor_Frame()

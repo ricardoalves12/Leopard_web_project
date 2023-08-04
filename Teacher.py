@@ -27,10 +27,19 @@ class Teacher(User):
          def print_S_list(self, crn):
             self.connect=sqlite3.connect("Database/tables.db")
             self.cursor=self.connect.cursor()
-            Fetch=""" SELECT ST_NAME FROM SCHEDULE WHERE T_NAME=? """
-            self.cursor.execute(Fetch,(self.first_name,))
-            result=self.cursor.fetchone()
-            for element in result:
-                print(element)
+            self.cursor.execute("SELECT 1 FROM SCHEDULE WHERE T_NAME =? AND CRN =?", (self.first_name,crn))
+            exist = self.cursor.fetchone()
+            if exist:
+                Fetch=""" SELECT * FROM SCHEDULE WHERE T_NAME=? AND CRN=? """
+                self.cursor.execute(Fetch,(self.first_name,crn))
+                result=self.cursor.fetchall()
+                new_list=[]
+                for element in result:
+                    new_list.append(element[1])
+                String_List='\n'.join(new_list)
+                self.connect.close()
+                return String_List
+            else:
+                return False
         
         
