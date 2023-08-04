@@ -13,7 +13,7 @@ class Student(User):
           Value="""SELECT * FROM  COURSE WHERE CRN=?"""
           self.cursor.execute(Value,(crn,))
           Schedule=self.cursor.fetchall()
-          if Schedule != []:
+          if Schedule != [] and self.Check_conflict(crn):
            for element in Schedule:
              CRN=element[0]
              C_NAME=element[1]
@@ -29,7 +29,44 @@ class Student(User):
              self.connect.close()
           else:
               return False
+       
           
+       def Check_conflict(self,crn):
+          self.connect=sqlite3.connect("Database/tables.db")
+          self.cursor=self.connect.cursor()
+          Value1="""SELECT * FROM COURSE WHERE CRN=?"""
+          self.cursor.execute(Value1,(crn,))
+          Add_Course=self.cursor.fetchall()
+          for C_info in Add_Course:
+            S_DAY=C_info[2]
+            E_DAY=C_info[3]
+            S_TIME=C_info[4]
+            E_TIME=C_info[5]
+
+          Value=""" SELECT * FROM SCHEDULE WHERE ID=?"""  
+          self.cursor.execute(Value,(self.ID,))
+          Check_list=self.cursor.fetchall()
+          Check_List_S_DAY=[]
+          Check_List_E_DAY=[]
+          Check_List_S_TIME=[]
+          Check_List_E_TIME=[]
+         
+          for element in Check_list:
+            Check_List_S_DAY.append(element[4])
+            Check_List_E_DAY.append(element[5])
+            Check_List_S_TIME.append(element[6])
+            Check_List_E_TIME.append(element[7])
+          
+          if S_DAY not in  Check_List_S_DAY:
+            if E_DAY not in Check_List_E_DAY:
+               if S_TIME not in Check_List_S_TIME:
+                if E_TIME not in Check_List_E_TIME:
+                  return True
+
+
+
+
+
        def Remove(self,Course_number):
              self.connect=sqlite3.connect("Database/tables.db")
              self.cursor=self.connect.cursor()
