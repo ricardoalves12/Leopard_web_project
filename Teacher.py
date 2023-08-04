@@ -39,9 +39,14 @@ class Teacher(User):
         
          
          def print_S_list(self):
-            Fetch=""" SELECT ST_NAME FROM SCHEDULE WHERE T_NAME=? """
+            Fetch=""" SELECT ST_NAME FROM SCHEDULE WHERE T_NAME=? AND CRN=? """
+
             self.cursor.execute(Fetch,(self.first_name,))
             result=self.cursor.fetchone()
+            new_list=[]
             for element in result:
-                print(element)
+                new_list.append(element)
+            String_List='\n'.join(new_list)
+            return String_List
+                
 
