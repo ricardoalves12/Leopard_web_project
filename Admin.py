@@ -50,14 +50,15 @@ class Admin(User):
     
     def Add_Teacher(self,T_name,T_last_name,T_title,T_hyear,T_department):
       ID=random.randint(2007,3000)
+      Password="123"
       Email=T_name + T_last_name[0]+ "@wit.edu"
       user_name=T_last_name+T_name[0]
       Value="""INSERT INTO INSTRUCTOR VALUES(?,?,?,?,?,?,?)"""
       Val=(ID,T_name,T_last_name,T_title,T_hyear,T_department,Email)
       self.cursor.execute(Value,(Val))
       self.connect.commit()
-      Value1="""INSERT INTO AUTHENTIFY(USER_ID,STATUS,FIRST_NAME,LAST_NAME,USER_NAME) VALUES (?,?,?,?,?)"""
-      Val1=(ID,"TEACHER",T_name,T_last_name,user_name)
+      Value1="""INSERT INTO AUTHENTIFY VALUES(?,?,?,?,?)"""
+      Val1=(ID,"TEACHER",T_name,T_last_name,user_name,Password,)
       self.cursor.execute(Value1,(Val1))
       self.connect.commit()
       

@@ -28,10 +28,13 @@ class User:
            for row in result:
              CRN=row[0]
              Course_name=row[1]
-             Course_day=row[2]
-             Course_time=row[3]
+             S_day=row[2]
+             E_day=row[3]
+             S_time=row[4]
+             E_time=row[5]
+             T_name=row[6]
              Instructor_name=row[4]
-           print (f"CRN: {CRN} \n Course name: {Course_name}\n Course day : {Course_day}\n Course time: {Course_time}\n Teacher: {Instructor_name}")
+           print (f"CRN: {CRN} \n Course name: {Course_name}\n Course day : {S_day}-{E_day}\n Course time: {S_time}-{E_time}\n Teacher: {T_name}")
           else:
             print("Course doesn't exist ")
     def implement(self):
