@@ -33,7 +33,7 @@ class User:
              S_time=row[4]
              E_time=row[5]
              T_name=row[6]
-             Instructor_name=row[4]
+             
            print (f"CRN: {CRN} \n Course name: {Course_name}\n Course day : {S_day}-{E_day}\n Course time: {S_time}-{E_time}\n Teacher: {T_name}")
           else:
             print("Course doesn't exist ")

@@ -90,7 +90,8 @@ test1a=Test_Admin.cursor.fetchone()
 
 if test1a:
       
-      Test_Admin.Add_Teacher("Zang","Fou","Full Prof",1897,"BMAS")
+      #Test_Admin.Add_Teacher("Zang","Fou","Full Prof",1897,"BMAS")
+      Test_Admin.unlink_S(363,10003)
 #     CRN2=random.randint(100,500)
 #     if CRN==CRN2:
 #       CRN2=random.randint(100,500)
