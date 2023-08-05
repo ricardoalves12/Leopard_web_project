@@ -57,11 +57,15 @@ class Student(User):
             Check_List_S_TIME.append(element[6])
             Check_List_E_TIME.append(element[7])
           
-          if S_DAY not in  Check_List_S_DAY:
-            if E_DAY not in Check_List_E_DAY:
-               if S_TIME not in Check_List_S_TIME:
-                if E_TIME not in Check_List_E_TIME:
+          if (Check_List_S_DAY !=[] and Check_List_E_DAY !=[] and Check_List_S_TIME !=[] and Check_List_E_TIME !=[]):
+              if S_DAY in  Check_List_S_DAY or E_DAY in Check_List_E_DAY:              
+                 if S_TIME not in Check_List_S_TIME and S_TIME not in Check_List_E_TIME:
+                   if E_TIME not in Check_List_E_TIME and E_TIME not in Check_List_S_TIME:
+                     return True
+              else: 
                   return True
+          else:
+              return True
 
 
 
