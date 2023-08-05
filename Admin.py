@@ -155,9 +155,10 @@ class Admin(User):
     def Remove_Course(self,CRN):
       Value ="""DELETE FROM COURSE WHERE CRN=?"""
       Values=(CRN,)
-      
-      
       self.cursor.execute(Value,Values)
+      self.connect.commit()
+      Valu1="""DELETE FROM SCHEDULE WHERE CRN=?"""
+      self.cursor.execute(Valu1,Values)
       self.connect.commit()
       return True
 
