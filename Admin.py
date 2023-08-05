@@ -45,11 +45,42 @@ class Admin(User):
       self.cursor.execute(Value,Values)
       self.connect.commit()
       return True
+     
+    def Unique_ID_S(self):
+       Value="""SELECT * FROM SCHEDULE """
+       self.cursor.execute(Value)
+       ID_Table=self.cursor.fetchall()
+       ID_check=[]
+       
+       ID=random.randint(1000,2000)
+       for element in ID_Table:
+          ID_check.append(element[0])
+       if ID  not in ID_check:
+        S_ID=ID
+       else:
+        ID=random.randint(1000,2000)  
+       return S_ID
+    
+    def Unique_ID_T(self):
+      Value="""SELECT * FROM SCHEDULE """
+      self.cursor.execute(Value)
+      ID_Table=self.cursor.fetchall()
+      ID_check=[]
+       
+      ID=random.randint(2000,3000)
+      for element in ID_Table:
+          ID_check.append(element[0])
+      if ID  not in ID_check:
+           S_ID=ID
+      else:
+        ID=random.randint(2000,3000)  
+      return S_ID
+       
 
     
     
     def Add_Teacher(self,T_name,T_last_name,T_title,T_hyear,T_department):
-      ID=random.randint(2007,3000)
+      ID=self.Unique_ID_T()
       Password="123"
       Email=T_name + T_last_name[0]+ "@wit.edu"
       user_name=T_last_name+T_name[0]
@@ -57,8 +88,8 @@ class Admin(User):
       Val=(ID,T_name,T_last_name,T_title,T_hyear,T_department,Email)
       self.cursor.execute(Value,(Val))
       self.connect.commit()
-      Value1="""INSERT INTO AUTHENTIFY VALUES(?,?,?,?,?)"""
-      Val1=(ID,"TEACHER",T_name,T_last_name,user_name,Password,)
+      Value1="""INSERT INTO AUTHENTIFY VALUES(?,?,?,?,?,?)"""
+      Val1=(ID,"INSTRUCTOR",T_name,T_last_name,user_name,Password)
       self.cursor.execute(Value1,(Val1))
       self.connect.commit()
       
@@ -67,7 +98,7 @@ class Admin(User):
     
   
     def Add_student(self,S_name,S_last_name,S_Gradyear, S_Major):
-      ID=random.randint(10012,20000)
+      ID=self.Unique_ID_S()
       Email=S_name+S_last_name[0]+"@wit.edu"
       username=S_last_name+S_name[0]
       Value="""INSERT INTO STUDENT(ID,NAME,SURNAME,GRADYEAR,MAJOR,EMAIL) VALUES(?,?,?,?,?,?)"""
@@ -126,7 +157,7 @@ class Admin(User):
        Value="""SELECT * FROM COURSE WHERE CRN=?"""
        self.cursor.execute(Value,(CRN,))
        C_info=self.cursor.fetchall()
-       if self.Check_conflict(CRN)
+       if self.Check_conflict(CRN):
         for element in C_info:
          CRN=element[0]
          C_NAME=element[1]

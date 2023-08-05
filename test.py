@@ -91,7 +91,23 @@ test1a=Test_Admin.cursor.fetchone()
 if test1a:
       
       #Test_Admin.Add_Teacher("Zang","Fou","Full Prof",1897,"BMAS")
-      Test_Admin.unlink_S(363,10003)
+      #Test_Admin.Add_Teacher("Saurav","Basnet","Assistant Prof",2019,"BSEE")
+      #Test_Admin.Add_Teacher("Pierre","Jean","Full Prof",2010,"BSME")
+      #Test_Admin.Add_Teacher("Emma","Smart","Full Prof",2002,"BIDE")
+      #Test_Admin.Add_Teacher("Rachel","Wing","Assistant Prof",2015,"BSCO")
+      #Test_Admin.Add_Teacher("James","Hunter","Assistant Prof",2018,"BIDE")
+      #Test_Admin.Add_Teacher("Lance","Sterling","Full Prof",2006,"BSME")
+      #Test_Admin.Add_Teacher("Mia ","Kalifha","Full Prof",2009,"BSPH")
+      #Test_Admin.Add_Teacher("Alex","Reeves","Assistant Prof",2020,"BMAS")
+      #Test_Admin.Add_Teacher("Leonel","Messi","Full Prof",2006,"BBIE")
+      #Test_Admin.Add_Teacher("Gareth","Saul","Assistant Prof",2021,"BCMA")
+      #Test_Admin.Add_Teacher("Amir","Ravir","Full Prof",2007,"BHSS")
+      #Test_Admin.Add_Teacher("Lorrine","Flow","Full Prof",2011,"BHSS")
+      #Test_Admin.Add_Teacher("Sara","Gates","Full Prof",2013,"BHSS")
+      #Test_Admin.Add_Teacher("Elena","Avez","Full Prof",2015,"BHSS")
+      #Test_Admin.Add_Teacher("Alieta ","Perez","Assistant Prof",2004,"BIDE")
+
+      Test_Admin.Add_student("","",)
 #     CRN2=random.randint(100,500)
 #     if CRN==CRN2:
 #       CRN2=random.randint(100,500)
@@ -101,7 +117,7 @@ if test1a:
 #     CRN4=random.randint(100,500)
 #     test_case=Test_Admin.Add(CRN4,"ECON","T","F",8,9,"Amir")
 #     CRN5=random.randint(100,500)
-#     test_case=Test_Admin.Add(CRN5,"PHYSICS","M","W",11,12,"Jean")
+#     test_case=Test_Admin.Add(CRN5,"PHYSICS","M","W",11,12,"Jea)
 #     CRN6=random.randint(100,500)
 #     test_case=Test_Admin.Add(CRN6,"INTRO TO CS","W","F",10,11,"Sara")
    
