@@ -42,7 +42,7 @@ class Admin(User):
           self.connect=sqlite3.connect("Database/tables.db")
           self.cursor=self.connect.cursor()
           ID=random.randint(2007,3000)
-          password = "123"
+          password = random.randint(100,10000)
           Email=T_name + T_last_name[0]+ "@wit.edu"
           user_name=T_last_name+T_name[0]
           Value="""INSERT INTO INSTRUCTOR VALUES(?,?,?,?,?,?,?)"""
@@ -62,7 +62,7 @@ class Admin(User):
           self.connect=sqlite3.connect("Database/tables.db")
           self.cursor=self.connect.cursor()
           ID=random.randint(10012,20000)
-          password = "123"
+          password =random.randint(11000,20000)
           Email=S_name+S_last_name[0]+"@wit.edu"
           username=S_last_name+S_name[0]
           Value="""INSERT INTO STUDENT(ID,NAME,SURNAME,GRADYEAR,MAJOR,EMAIL) VALUES(?,?,?,?,?,?)"""
