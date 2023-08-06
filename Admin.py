@@ -9,9 +9,11 @@ class Admin(User):
        
 
     def Add_Course(self,CRN,C_Name,S_day,E_day,S_time,E_time,T_name):
-        if (CRN != '' and C_Name != '' and S_day!= '' and E_day != '' and S_time!= '' and E_time!= '' and T_name!= ''):
-          self.connect=sqlite3.connect("Database/tables.db")
-          self.cursor=self.connect.cursor()
+        self.connect=sqlite3.connect("Database/tables.db")
+        self.cursor=self.connect.cursor()
+        self.cursor.execute("SELECT 1 FROM COURSE WHERE CRN =?", (CRN,))
+        crn_exist = self.cursor.fetchone()
+        if (CRN != '' and C_Name != '' and S_day!= '' and E_day != '' and S_time!= '' and E_time!= '' and T_name!= '' and crn_exist == None):         
           Value ="""INSERT INTO COURSE(CRN,C_NAME,S_DAY,E_DAY,S_TIME,E_TIME,T_NAME) VALUES(?,?,?,?,?,?,?)"""
           Values=(CRN,C_Name,S_day,E_day,S_time,E_time,T_name)
           self.cursor.execute(Value,Values)
@@ -37,10 +39,8 @@ class Admin(User):
       else:
           return False
 
-    def Add_Teacher(self,T_name,T_last_name,T_title,T_hyear,T_department):
-        if (T_name != '' and T_last_name != '' and T_title!= '' and T_hyear!= '' and T_department!= ''):
-          self.connect=sqlite3.connect("Database/tables.db")
-          self.cursor=self.connect.cursor()
+    def Add_Teacher(self,T_name,T_last_name,T_title,T_hyear,T_department):        
+        if (T_name != '' and T_last_name != '' and T_title!= '' and T_hyear!= '' and T_department!= ''):          
           ID=random.randint(2007,3000)
           password = random.randint(100,10000)
           Email=T_name + T_last_name[0]+ "@wit.edu"
@@ -96,7 +96,9 @@ class Admin(User):
       self.cursor=self.connect.cursor()
       self.cursor.execute("SELECT 1 FROM COURSE WHERE CRN =?", (CRN,))
       crn_exist = self.cursor.fetchone()
-      if crn_exist and new_T != " ":
+      self.cursor.execute("SELECT 1 FROM INSTRUCTOR WHERE Name =?", (new_T,))
+      teacher_exist = self.cursor.fetchone()
+      if crn_exist and new_T != " " and teacher_exist != None:
           Value="""UPDATE COURSE SET T_NAME=? WHERE CRN=? """
           self.cursor.execute(Value,(new_T,CRN))
           self.connect.commit()

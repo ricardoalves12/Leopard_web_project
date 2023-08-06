@@ -734,7 +734,7 @@ class AdminLinkTeachertoCourseFrame(tkinter.Frame):
         self.logout_button = tkinter.Button(self, text="Back", font=('Times',12),  bg="red", fg="white", bd=0, command=self.Back)
         self.logout_button.place(x=285, y=30)
 
-        self.name_label = tkinter.Label(self, text="Enter Name:", font=('Times',12), bg="white")
+        self.name_label = tkinter.Label(self, text="Enter Teacher First Name:", font=('Times',12), bg="white")
         self.name_label.place(x=20, y=100)
         self.name_entry = tkinter.Entry(self, highlightbackground='black', highlightthickness=1,bd=0,width=34,font=('Times',14), bg="white")
         self.name_entry.place(x=20, y=130)
