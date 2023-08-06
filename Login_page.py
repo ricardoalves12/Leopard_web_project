@@ -27,6 +27,31 @@ class MainPage(tkinter.Tk):
         #setting page geometry to the size of the user's screen
         width_screen= self.winfo_screenwidth()
         height_screen= self.winfo_screenheight()
+        self.iconphoto(False,PhotoImage(file = 'Images_for_Gui\images.png'))
+        #setting page geometry to the size of the user's screen        
+        self.geometry("%dx%d" % (width_screen, height_screen))
+        # Define image
+        self.bg = ImageTk.PhotoImage(file="Images_for_Gui\WIT_thumb.png")
+        #Create canvas
+        my_canvas = Canvas(self, width = width_screen, height = height_screen)
+        my_canvas.pack(fill="both", expand=True)
+
+        #set image in canvas
+        my_canvas.create_image(0,0,image=self.bg, anchor="nw")
+
+        def resizer(e):
+            global bg1, resized_bg, new_bg
+            # Open Image
+            bg1= Image.open("wit-background.png")
+            #resize Image
+            resized_bg = bg1.resized((e.width, e.height), Image.ANTIALIAS)
+            #define the image
+            new_bg = ImageTk.PhotoImage(resized_bg)
+            #add it back to canvas
+            my_canvas.create_image(0,0, image=new_bg, anchor='nw')
+        #create a label
+        self.my_label = Label(self, image=self.bg, bg='black').place(x=0, y=0, relwidth=1, relheight=1)
+        self.bind('<Return>', resizer)
         self.geometry("%dx%d" % (width_screen, height_screen))
         self.iconphoto(False, PhotoImage(file = 'Images_for_Gui/images.png'))
         self.login_frame = LoginFrame(self)
