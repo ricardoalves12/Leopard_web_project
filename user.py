@@ -15,7 +15,6 @@ class User:
     def printInfo(self):
         return f"User Name: {self.first_name}, {self.last_name}\n ID: {self.ID}"
 
-
     def CheckLoginCredentials(self, username, password):
          DbConnect = sqlite3.connect("Database/tables.db")
          db= DbConnect.cursor()         

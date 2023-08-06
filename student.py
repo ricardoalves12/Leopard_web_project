@@ -5,8 +5,7 @@ import random
 class Student(User):
        def __init__(self,first_name,last_name,ID):
           super().__init__(first_name,last_name,ID)  
-          
-     
+              
        def Add_Course(self,crn):
           self.connect=sqlite3.connect("Database/tables.db")
           self.cursor=self.connect.cursor()
@@ -66,10 +65,6 @@ class Student(User):
                   return True
           else:
               return True
-
-
-
-
 
        def Remove(self,Course_number):
              self.connect=sqlite3.connect("Database/tables.db")
