@@ -107,7 +107,23 @@ if test1a:
       #Test_Admin.Add_Teacher("Elena","Avez","Full Prof",2015,"BHSS")
       #Test_Admin.Add_Teacher("Alieta ","Perez","Assistant Prof",2004,"BIDE")
 
-      Test_Admin.Add_student("","",)
+      Test_Admin.Add_student("Aime","Sanchez",2026,"BSME")
+      Test_Admin.Add_student("Eveline","Vall",2026,"BSEE")
+      Test_Admin.Add_student("Marcus","Benz",2026,"BSCO")
+      Test_Admin.Add_student("Rachel","Snow",2027,"BIDE")
+      Test_Admin.Add_student("George","Rocky",2027,"BSPH")
+      Test_Admin.Add_student("Ray","Appolp",2027,"BBIE")
+      Test_Admin.Add_student("Martha","Victory",2028,"BMAS")
+      Test_Admin.Add_student("Travir","Amhed",2028,"BCMA")
+      Test_Admin.Add_student("Clark","Walker",2028,"BSCO")
+      Test_Admin.Add_student("Mateo","Creed",2029,"BIDE")
+      Test_Admin.Add_student("Nikita","Torn",2029,"BSEE")
+      Test_Admin.Add_student("Mordecai","Rico",2029,"BSME")
+      Test_Admin.Add_student("Creg","Arrow",2030,"BCMA")
+      Test_Admin.Add_student("Malaika","Sow",2030,"BIDE")
+      Test_Admin.Add_student("Danilo","Cergo",2030,"BSPH")
+     
+
 #     CRN2=random.randint(100,500)
 #     if CRN==CRN2:
 #       CRN2=random.randint(100,500)
